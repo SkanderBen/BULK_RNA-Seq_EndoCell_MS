@@ -233,12 +233,11 @@ biplot(BD1B, colby = 'size',shape = 'condition', hline = 0, vline = 0,legendPosi
 biplot(BD1B, colby = 'sizeMerge',shape = 'condition', hline = 0, vline = 0,legendPosition = 'right', lab="",title="sizeMerge")
 ```
 
-```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 9, fig.height = 8}
-meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-")
-library(autoplotly)
-autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size")
-
-```
+#```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 9, fig.height = 8}
+#meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-")
+#library(autoplotly)
+#autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size")
+#```
 
 
 ```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 7, fig.height = 6}

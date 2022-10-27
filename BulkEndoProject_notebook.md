@@ -389,14 +389,7 @@ biplot(BD1B, colby = 'sizeMerge',shape = 'condition', hline = 0, vline = 0,legen
 
 ![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-9.png)<!-- -->
 
-``` r
-meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-")
-library(autoplotly)
-autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size")
-```
-
-<div id="htmlwidget-a69b7814fffa7e73e38d" style="width:864px;height:768px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a69b7814fffa7e73e38d">{"x":{"data":[{"x":[-0.0780122788654503],"y":[-0.0480474160155893],"text":"PC1: -0.07801228<br />PC2: -0.048047416<br />sizeMerge: HBEC<br />showPCA: 100-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(248,118,109,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,100-it+37,112)","legendgroup":"(HBEC,100-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0767254114885589],"y":[-0.0440939159645244],"text":"PC1: -0.07672541<br />PC2: -0.044093916<br />sizeMerge: HBEC<br />showPCA: 101-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(246,121,99,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,101-it+37,112)","legendgroup":"(HBEC,101-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0758672354031359],"y":[-0.0450183759104122],"text":"PC1: -0.07586724<br />PC2: -0.045018376<br />sizeMerge: HBEC<br />showPCA: 102-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(243,123,89,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,102-it+37,112)","legendgroup":"(HBEC,102-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0777955633943483],"y":[-0.0445410969304188],"text":"PC1: -0.07779556<br />PC2: -0.044541097<br />sizeMerge: HBEC<br />showPCA: 103-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(240,126,77,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,103-it+IL4,112)","legendgroup":"(HBEC,103-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0773169762157295],"y":[-0.043285243048554],"text":"PC1: -0.07731698<br />PC2: -0.043285243<br />sizeMerge: HBEC<br />showPCA: 104-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(237,129,65,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,104-it+IL4,112)","legendgroup":"(HBEC,104-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0455809394423818],"y":[-0.0220886215265583],"text":"PC1: -0.04558094<br />PC2: -0.022088622<br />sizeMerge: HBEC<br />showPCA: 105-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(234,131,49,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,105-it+IL4,112)","legendgroup":"(HBEC,105-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.163683003414925],"y":[-0.0722670795662351],"text":"PC1:  0.16368300<br />PC2: -0.072267080<br />sizeMerge: HBEC<br />showPCA: 106-IL10<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(231,134,27,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,106-IL10,112)","legendgroup":"(HBEC,106-IL10,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.168314350310316],"y":[-0.0701302712858887],"text":"PC1:  0.16831435<br />PC2: -0.070130271<br />sizeMerge: HBEC<br />showPCA: 107-TGFB1<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(227,136,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,107-TGFB1,112)","legendgroup":"(HBEC,107-TGFB1,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0756129456763209],"y":[-0.044201233094891],"text":"PC1: -0.07561295<br />PC2: -0.044201233<br />sizeMerge: HBEC<br />showPCA: 109-IL17<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(224,139,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,109-IL17,112)","legendgroup":"(HBEC,109-IL17,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0774093184589158],"y":[-0.0462434485738201],"text":"PC1: -0.07740932<br />PC2: -0.046243449<br />sizeMerge: HBEC<br />showPCA: 110-GMCSF<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(220,141,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,110-GMCSF,112)","legendgroup":"(HBEC,110-GMCSF,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0758661647662348],"y":[-0.0491142952073711],"text":"PC1: -0.07586616<br />PC2: -0.049114295<br />sizeMerge: HBEC<br />showPCA: 111-IL35<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(216,144,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,111-IL35,112)","legendgroup":"(HBEC,111-IL35,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.155946564421431],"y":[-0.0678190580163286],"text":"PC1:  0.15594656<br />PC2: -0.067819058<br />sizeMerge: HBEC<br />showPCA: 114-ECM<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(211,146,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,114-ECM,112)","legendgroup":"(HBEC,114-ECM,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0474518566993596],"y":[-0.042330183965577],"text":"PC1: -0.04745186<br />PC2: -0.042330184<br />sizeMerge: HBEC<br />showPCA: 115-ACM40<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(207,148,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,115-ACM40,112)","legendgroup":"(HBEC,115-ACM40,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0564035509069213],"y":[-0.0375655086173941],"text":"PC1: -0.05640355<br />PC2: -0.037565509<br />sizeMerge: HBEC<br />showPCA: 116-IT<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(202,151,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,116-IT,112)","legendgroup":"(HBEC,116-IT,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.033831343098372],"y":[-0.0399157025200291],"text":"PC1: -0.03383134<br />PC2: -0.039915703<br />sizeMerge: HBEC<br />showPCA: 117-IFNg<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(197,153,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,117-IFNg,112)","legendgroup":"(HBEC,117-IFNg,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.038397708532411],"y":[-0.0289905376225993],"text":"PC1: -0.03839771<br />PC2: -0.028990538<br />sizeMerge: HBEC<br />showPCA: 118-TNFa<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(192,155,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,118-TNFa,112)","legendgroup":"(HBEC,118-TNFa,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0592812495903528],"y":[-0.0374972915480616],"text":"PC1: -0.05928125<br />PC2: -0.037497292<br />sizeMerge: HBEC<br />showPCA: 121-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(187,157,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,121-it+IL4,112)","legendgroup":"(HBEC,121-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.070963012562567],"y":[-0.0386203005119631],"text":"PC1: -0.07096301<br />PC2: -0.038620301<br />sizeMerge: HBEC<br />showPCA: 122-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(181,159,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,122-it+IL4,112)","legendgroup":"(HBEC,122-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0671948477505429],"y":[-0.0330318713967623],"text":"PC1: -0.06719485<br />PC2: -0.033031871<br />sizeMerge: HBEC<br />showPCA: 123-it+IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(175,161,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,123-it+IL4,112)","legendgroup":"(HBEC,123-it+IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.056586094255198],"y":[-0.0379139133485578],"text":"PC1: -0.05658609<br />PC2: -0.037913913<br />sizeMerge: HBEC<br />showPCA: 124-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(169,163,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,124-it+37,112)","legendgroup":"(HBEC,124-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.194128382556702],"y":[-0.0592418601775894],"text":"PC1:  0.19412838<br />PC2: -0.059241860<br />sizeMerge: HBEC<br />showPCA: 125-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(163,165,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,125-it+37,112)","legendgroup":"(HBEC,125-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.19356899996233],"y":[-0.0630636646389385],"text":"PC1:  0.19356900<br />PC2: -0.063063665<br />sizeMerge: HBEC<br />showPCA: 126-it+37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(156,167,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,126-it+37,112)","legendgroup":"(HBEC,126-it+37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.195848142020603],"y":[-0.0606213242436807],"text":"PC1:  0.19584814<br />PC2: -0.060621324<br />sizeMerge: HBEC<br />showPCA: 127-IL17<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(149,169,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,127-IL17,112)","legendgroup":"(HBEC,127-IL17,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0592706824842257],"y":[-0.0413827389598604],"text":"PC1: -0.05927068<br />PC2: -0.041382739<br />sizeMerge: HBEC<br />showPCA: 128-GMCSF<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(141,171,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,128-GMCSF,112)","legendgroup":"(HBEC,128-GMCSF,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0593376914664071],"y":[-0.036471591933406],"text":"PC1: -0.05933769<br />PC2: -0.036471592<br />sizeMerge: HBEC<br />showPCA: 129-IL35<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(133,173,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,129-IL35,112)","legendgroup":"(HBEC,129-IL35,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0512814703962036],"y":[-0.0427429620500116],"text":"PC1: -0.05128147<br />PC2: -0.042742962<br />sizeMerge: HBEC<br />showPCA: 130-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(124,174,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,130-IL37,112)","legendgroup":"(HBEC,130-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.185510943304616],"y":[-0.0543968210721],"text":"PC1:  0.18551094<br />PC2: -0.054396821<br />sizeMerge: HBEC<br />showPCA: 131-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(114,176,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,131-IL37,112)","legendgroup":"(HBEC,131-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.177007236131918],"y":[-0.0533838175559161],"text":"PC1:  0.17700724<br />PC2: -0.053383818<br />sizeMerge: HBEC<br />showPCA: 132-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(103,177,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,132-IL37,112)","legendgroup":"(HBEC,132-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.183367381337861],"y":[-0.0536430060385815],"text":"PC1:  0.18336738<br />PC2: -0.053643006<br />sizeMerge: HBEC<br />showPCA: 133-ECM<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(91,179,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,133-ECM,112)","legendgroup":"(HBEC,133-ECM,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0689288887492178],"y":[-0.0372293992131119],"text":"PC1: -0.06892889<br />PC2: -0.037229399<br />sizeMerge: HBEC<br />showPCA: 134-IT<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(76,180,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,134-IT,112)","legendgroup":"(HBEC,134-IT,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0675225046055635],"y":[-0.0327665137532293],"text":"PC1: -0.06752250<br />PC2: -0.032766514<br />sizeMerge: HBEC<br />showPCA: 135-IL23<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(57,182,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,135-IL23,112)","legendgroup":"(HBEC,135-IL23,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0641048811556724],"y":[-0.0382656690508857],"text":"PC1: -0.06410488<br />PC2: -0.038265669<br />sizeMerge: HBEC<br />showPCA: 136-IL1b<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(27,183,0,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,136-IL1b,112)","legendgroup":"(HBEC,136-IL1b,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.0522307783839428],"y":[-0.0426869701474151],"text":"PC1:  0.05223078<br />PC2: -0.042686970<br />sizeMerge: HBEC<br />showPCA: 137-IL6<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,184,31,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,137-IL6,112)","legendgroup":"(HBEC,137-IL6,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0312070562337672],"y":[-0.0240151710704848],"text":"PC1: -0.03120706<br />PC2: -0.024015171<br />sizeMerge: HBEC<br />showPCA: 138-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,185,51,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,138-IL4,112)","legendgroup":"(HBEC,138-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0671222116018132],"y":[-0.0329899083215044],"text":"PC1: -0.06712221<br />PC2: -0.032989908<br />sizeMerge: HBEC<br />showPCA: 139-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,66,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,139-IL4,112)","legendgroup":"(HBEC,139-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0665293496559492],"y":[-0.00579840925667351],"text":"PC1: -0.06652935<br />PC2: -0.005798409<br />sizeMerge: HBEC<br />showPCA: 140-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,187,78,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,140-IL4,112)","legendgroup":"(HBEC,140-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0744092767624938],"y":[-0.0363001275506165],"text":"PC1: -0.07440928<br />PC2: -0.036300128<br />sizeMerge: HBEC<br />showPCA: 141-IL10<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,188,89,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,141-IL10,112)","legendgroup":"(HBEC,141-IL10,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.181646913417159],"y":[-0.0497997433413663],"text":"PC1:  0.18164691<br />PC2: -0.049799743<br />sizeMerge: HBEC<br />showPCA: 142-TGFB1<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,189,99,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,142-TGFB1,112)","legendgroup":"(HBEC,142-TGFB1,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0731601518703264],"y":[-0.03496042347614],"text":"PC1: -0.07316015<br />PC2: -0.034960423<br />sizeMerge: HBEC<br />showPCA: 146-ACM40<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,190,108,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,146-ACM40,112)","legendgroup":"(HBEC,146-ACM40,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0704870911678886],"y":[-0.0364159565706458],"text":"PC1: -0.07048709<br />PC2: -0.036415957<br />sizeMerge: HBEC<br />showPCA: 147-IFNg<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,117,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,147-IFNg,112)","legendgroup":"(HBEC,147-IFNg,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.184181287452583],"y":[-0.0557503401475865],"text":"PC1:  0.18418129<br />PC2: -0.055750340<br />sizeMerge: HBEC<br />showPCA: 148-TNFa<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,125,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,148-TNFa,112)","legendgroup":"(HBEC,148-TNFa,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0547259491209515],"y":[-0.0407933100463179],"text":"PC1: -0.05472595<br />PC2: -0.040793310<br />sizeMerge: HBEC<br />showPCA: 91-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,99,181,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,91-IL37,112)","legendgroup":"(HBEC,91-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.157638041011942],"y":[-0.0667112562473879],"text":"PC1:  0.15763804<br />PC2: -0.066711256<br />sizeMerge: HBEC<br />showPCA: 92-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,101,174,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,92-IL37,112)","legendgroup":"(HBEC,92-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0700365311499526],"y":[-0.0214594586499859],"text":"PC1: -0.07003653<br />PC2: -0.021459459<br />sizeMerge: HBEC<br />showPCA: 93-IL37<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,102,167,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,93-IL37,112)","legendgroup":"(HBEC,93-IL37,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0771406644611973],"y":[-0.0406594459102367],"text":"PC1: -0.07714066<br />PC2: -0.040659446<br />sizeMerge: HBEC<br />showPCA: 94-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,104,159,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,94-IL4,112)","legendgroup":"(HBEC,94-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0747616209970906],"y":[-0.041093183596121],"text":"PC1: -0.07476162<br />PC2: -0.041093184<br />sizeMerge: HBEC<br />showPCA: 95-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,106,152,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,95-IL4,112)","legendgroup":"(HBEC,95-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0712538575903895],"y":[-0.0409963240481013],"text":"PC1: -0.07125386<br />PC2: -0.040996324<br />sizeMerge: HBEC<br />showPCA: 96-IL4<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,108,144,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,96-IL4,112)","legendgroup":"(HBEC,96-IL4,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0294338376176853],"y":[-0.0401065419117313],"text":"PC1: -0.02943384<br />PC2: -0.040106542<br />sizeMerge: HBEC<br />showPCA: 97-IL23<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(253,111,135,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,97-IL23,112)","legendgroup":"(HBEC,97-IL23,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.0469884867343923],"y":[-0.0440669548939885],"text":"PC1:  0.04698849<br />PC2: -0.044066955<br />sizeMerge: HBEC<br />showPCA: 98-IL1b<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(252,113,127,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,98-IL1b,112)","legendgroup":"(HBEC,98-IL1b,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.079851686264706],"y":[-0.0406348493109872],"text":"PC1: -0.07985169<br />PC2: -0.040634849<br />sizeMerge: HBEC<br />showPCA: 99-IL6<br />size: 112","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(250,116,118,1)","opacity":1,"size":5.66929133858268,"symbol":"square","line":{"width":1.88976377952756,"color":"rgba(248,118,109,1)"}},"hoveron":"points","name":"(HBEC,99-IL6,112)","legendgroup":"(HBEC,99-IL6,112)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0400831400180512],"y":[0.155729131928736],"text":"PC1: -0.04008314<br />PC2:  0.155729132<br />sizeMerge: HMEC<br />showPCA: 150-IL10<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,133,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,150-IL10,<30)","legendgroup":"(HMEC,150-IL10,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.145942268453586],"y":[0.119424203040415],"text":"PC1:  0.14594227<br />PC2:  0.119424203<br />sizeMerge: HMEC<br />showPCA: 151-TGFB1<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,141,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,151-TGFB1,<30)","legendgroup":"(HMEC,151-TGFB1,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.138430893201498],"y":[0.123538576928231],"text":"PC1:  0.13843089<br />PC2:  0.123538577<br />sizeMerge: HMEC<br />showPCA: 152-IL37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,149,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,152-IL37,<30)","legendgroup":"(HMEC,152-IL37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.14887563763757],"y":[0.1242607333713],"text":"PC1:  0.14887564<br />PC2:  0.124260733<br />sizeMerge: HMEC<br />showPCA: 153-IL37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,193,156,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,153-IL37,<30)","legendgroup":"(HMEC,153-IL37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.152793333271446],"y":[0.132338538024288],"text":"PC1:  0.15279333<br />PC2:  0.132338538<br />sizeMerge: HMEC<br />showPCA: 154-IL37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,193,163,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,154-IL37,<30)","legendgroup":"(HMEC,154-IL37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.151826960678447],"y":[0.119437872552994],"text":"PC1:  0.15182696<br />PC2:  0.119437873<br />sizeMerge: HMEC<br />showPCA: 155-it+IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,193,170,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,155-it+IL4,<30)","legendgroup":"(HMEC,155-it+IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.153797576799395],"y":[0.126620771075681],"text":"PC1:  0.15379758<br />PC2:  0.126620771<br />sizeMerge: HMEC<br />showPCA: 156-it+IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,177,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,156-it+IL4,<30)","legendgroup":"(HMEC,156-it+IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0434476357877006],"y":[0.131153718048921],"text":"PC1: -0.04344764<br />PC2:  0.131153718<br />sizeMerge: HMEC<br />showPCA: 157-it+IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,184,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,157-it+IL4,<30)","legendgroup":"(HMEC,157-it+IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0393463084464739],"y":[0.130410492712811],"text":"PC1: -0.03934631<br />PC2:  0.130410493<br />sizeMerge: HMEC<br />showPCA: 158-IL23<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,192,190,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,158-IL23,<30)","legendgroup":"(HMEC,158-IL23,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0320977563208128],"y":[0.130113560817052],"text":"PC1: -0.03209776<br />PC2:  0.130113561<br />sizeMerge: HMEC<br />showPCA: 159-IL1b<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,191,196,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,159-IL1b,<30)","legendgroup":"(HMEC,159-IL1b,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0505184536682411],"y":[0.164413097349186],"text":"PC1: -0.05051845<br />PC2:  0.164413097<br />sizeMerge: HMEC<br />showPCA: 160-IL6<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,190,202,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,160-IL6,<30)","legendgroup":"(HMEC,160-IL6,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0486618247882465],"y":[0.170069413822227],"text":"PC1: -0.04866182<br />PC2:  0.170069414<br />sizeMerge: HMEC<br />showPCA: 161-IL17<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,189,208,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,161-IL17,<30)","legendgroup":"(HMEC,161-IL17,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0549493980469859],"y":[0.158744425061361],"text":"PC1: -0.05494940<br />PC2:  0.158744425<br />sizeMerge: HMEC<br />showPCA: 162-GMCSF<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,188,214,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,162-GMCSF,<30)","legendgroup":"(HMEC,162-GMCSF,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0516890009780626],"y":[0.163680508393505],"text":"PC1: -0.05168900<br />PC2:  0.163680508<br />sizeMerge: HMEC<br />showPCA: 163-IL35<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,187,219,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,163-IL35,<30)","legendgroup":"(HMEC,163-IL35,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0522148625508256],"y":[0.168428315514846],"text":"PC1: -0.05221486<br />PC2:  0.168428316<br />sizeMerge: HMEC<br />showPCA: 164-it+37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,186,224,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,164-it+37,<30)","legendgroup":"(HMEC,164-it+37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.146790380430384],"y":[0.115575105753012],"text":"PC1:  0.14679038<br />PC2:  0.115575106<br />sizeMerge: HMEC<br />showPCA: 165-it+37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,184,229,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,165-it+37,<30)","legendgroup":"(HMEC,165-it+37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0526348588885837],"y":[0.159328815739979],"text":"PC1: -0.05263486<br />PC2:  0.159328816<br />sizeMerge: HMEC<br />showPCA: 166-it+37<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,182,234,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,166-it+37,<30)","legendgroup":"(HMEC,166-it+37,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0506047855043025],"y":[0.153580277177337],"text":"PC1: -0.05060479<br />PC2:  0.153580277<br />sizeMerge: HMEC<br />showPCA: 167-IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,180,239,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,167-IL4,<30)","legendgroup":"(HMEC,167-IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.052001616579401],"y":[0.164510408569552],"text":"PC1: -0.05200162<br />PC2:  0.164510409<br />sizeMerge: HMEC<br />showPCA: 168-IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,178,243,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,168-IL4,<30)","legendgroup":"(HMEC,168-IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.088934111865454],"y":[0.14510699711488],"text":"PC1:  0.08893411<br />PC2:  0.145106997<br />sizeMerge: HMEC<br />showPCA: 169-IL4<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,176,246,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,169-IL4,<30)","legendgroup":"(HMEC,169-IL4,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0190643633942374],"y":[0.174922840162404],"text":"PC1: -0.01906436<br />PC2:  0.174922840<br />sizeMerge: HMEC<br />showPCA: 170-ACM40<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,173,250,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,170-ACM40,<30)","legendgroup":"(HMEC,170-ACM40,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0533534871657992],"y":[0.158311206948142],"text":"PC1: -0.05335349<br />PC2:  0.158311207<br />sizeMerge: HMEC<br />showPCA: 171-IFNg<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,171,253,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,171-IFNg,<30)","legendgroup":"(HMEC,171-IFNg,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0113060306516626],"y":[0.18051130681305],"text":"PC1: -0.01130603<br />PC2:  0.180511307<br />sizeMerge: HMEC<br />showPCA: 172-TNFa<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,168,255,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,172-TNFa,<30)","legendgroup":"(HMEC,172-TNFa,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0153759133556465],"y":[0.184533897422712],"text":"PC1: -0.01537591<br />PC2:  0.184533897<br />sizeMerge: HMEC<br />showPCA: 173-IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,165,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,173-IL4,>30)","legendgroup":"(HMEC,173-IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0519345627358958],"y":[0.153699053438701],"text":"PC1: -0.05193456<br />PC2:  0.153699053<br />sizeMerge: HMEC<br />showPCA: 174-IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(53,162,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,174-IL4,>30)","legendgroup":"(HMEC,174-IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0420833355689634],"y":[0.174303379484035],"text":"PC1: -0.04208334<br />PC2:  0.174303379<br />sizeMerge: HMEC<br />showPCA: 175-IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(82,158,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,175-IL4,>30)","legendgroup":"(HMEC,175-IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.143696585024981],"y":[0.126785154458011],"text":"PC1:  0.14369659<br />PC2:  0.126785154<br />sizeMerge: HMEC<br />showPCA: 176-IL10<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(103,155,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,176-IL10,>30)","legendgroup":"(HMEC,176-IL10,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0575981826192442],"y":[0.148032843741605],"text":"PC1: -0.05759818<br />PC2:  0.148032844<br />sizeMerge: HMEC<br />showPCA: 177-TGFB1<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(121,151,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,177-TGFB1,>30)","legendgroup":"(HMEC,177-TGFB1,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0458693871470487],"y":[0.178534437643162],"text":"PC1: -0.04586939<br />PC2:  0.178534438<br />sizeMerge: HMEC<br />showPCA: 178-ECM<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(136,147,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,178-ECM,>30)","legendgroup":"(HMEC,178-ECM,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0854099256300471],"y":[-0.107508519373937],"text":"PC1: -0.08540993<br />PC2: -0.107508519<br />sizeMerge: HMEC<br />showPCA: 179-IL17<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(149,144,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,179-IL17,>30)","legendgroup":"(HMEC,179-IL17,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0847069301612692],"y":[-0.107406933937338],"text":"PC1: -0.08470693<br />PC2: -0.107406934<br />sizeMerge: HMEC<br />showPCA: 180-GMCSF<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(161,140,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,180-GMCSF,>30)","legendgroup":"(HMEC,180-GMCSF,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0863134522782767],"y":[-0.10621255326328],"text":"PC1: -0.08631345<br />PC2: -0.106212553<br />sizeMerge: HMEC<br />showPCA: 181-IL35<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(172,136,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,181-IL35,>30)","legendgroup":"(HMEC,181-IL35,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0637765568186148],"y":[-0.0951070030287225],"text":"PC1: -0.06377656<br />PC2: -0.095107003<br />sizeMerge: HMEC<br />showPCA: 182-IL37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(181,132,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,182-IL37,>30)","legendgroup":"(HMEC,182-IL37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0583902734457269],"y":[-0.0967414955468043],"text":"PC1: -0.05839027<br />PC2: -0.096741496<br />sizeMerge: HMEC<br />showPCA: 183-IL37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(191,128,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,183-IL37,>30)","legendgroup":"(HMEC,183-IL37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0639672383136232],"y":[-0.0933209038327502],"text":"PC1: -0.06396724<br />PC2: -0.093320904<br />sizeMerge: HMEC<br />showPCA: 184-IL37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(199,124,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,184-IL37,>30)","legendgroup":"(HMEC,184-IL37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0822939100091767],"y":[-0.107377575343602],"text":"PC1: -0.08229391<br />PC2: -0.107377575<br />sizeMerge: HMEC<br />showPCA: 185-it+IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(207,120,255,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,185-it+IL4,>30)","legendgroup":"(HMEC,185-it+IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0473346048616364],"y":[-0.0779534534779302],"text":"PC1: -0.04733460<br />PC2: -0.077953453<br />sizeMerge: HMEC<br />showPCA: 186-it+IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(214,117,254,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,186-it+IL4,>30)","legendgroup":"(HMEC,186-it+IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0800191805783925],"y":[-0.105166612568285],"text":"PC1: -0.08001918<br />PC2: -0.105166613<br />sizeMerge: HMEC<br />showPCA: 187-it+IL4<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(220,113,250,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,187-it+IL4,>30)","legendgroup":"(HMEC,187-it+IL4,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.160935505375942],"y":[-0.111363516903234],"text":"PC1:  0.16093551<br />PC2: -0.111363517<br />sizeMerge: HMEC<br />showPCA: 188-it+37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(226,110,247,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,188-it+37,>30)","legendgroup":"(HMEC,188-it+37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.158193138042698],"y":[-0.111530963564002],"text":"PC1:  0.15819314<br />PC2: -0.111530964<br />sizeMerge: HMEC<br />showPCA: 189-it+37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(231,107,243,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,189-it+37,>30)","legendgroup":"(HMEC,189-it+37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0230918761945926],"y":[-0.0953541386603902],"text":"PC1: -0.02309188<br />PC2: -0.095354139<br />sizeMerge: HMEC<br />showPCA: 190-it+37<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(236,105,239,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,190-it+37,>30)","legendgroup":"(HMEC,190-it+37,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.160262796749315],"y":[-0.119320514958704],"text":"PC1:  0.16026280<br />PC2: -0.119320515<br />sizeMerge: HMEC<br />showPCA: 191-IL23<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(240,102,234,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,191-IL23,>30)","legendgroup":"(HMEC,191-IL23,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.168490348575678],"y":[-0.115571275855622],"text":"PC1:  0.16849035<br />PC2: -0.115571276<br />sizeMerge: HMEC<br />showPCA: 192-IL1b<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(244,100,229,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,192-IL1b,>30)","legendgroup":"(HMEC,192-IL1b,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0.169442498501665],"y":[-0.116795457771895],"text":"PC1:  0.16944250<br />PC2: -0.116795458<br />sizeMerge: HMEC<br />showPCA: 193-IL6<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(247,99,224,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,193-IL6,>30)","legendgroup":"(HMEC,193-IL6,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0820311164535859],"y":[-0.108863049294677],"text":"PC1: -0.08203112<br />PC2: -0.108863049<br />sizeMerge: HMEC<br />showPCA: 194-IT<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(250,98,219,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,194-IT,>30)","legendgroup":"(HMEC,194-IT,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0657127200276671],"y":[-0.0807717408738433],"text":"PC1: -0.06571272<br />PC2: -0.080771741<br />sizeMerge: HMEC<br />showPCA: 195-IFNg<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(252,97,213,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,195-IFNg,>30)","legendgroup":"(HMEC,195-IFNg,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0865436648932258],"y":[-0.106336542867509],"text":"PC1: -0.08654366<br />PC2: -0.106336543<br />sizeMerge: HMEC<br />showPCA: 196-TNFa<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(254,97,207,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,196-TNFa,>30)","legendgroup":"(HMEC,196-TNFa,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0839357917189325],"y":[-0.107107732200818],"text":"PC1: -0.08393579<br />PC2: -0.107107732<br />sizeMerge: HMEC<br />showPCA: 197-ACM40<br />size: >30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,97,201,1)","opacity":1,"size":5.66929133858268,"symbol":"triangle-up","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,197-ACM40,>30)","legendgroup":"(HMEC,197-ACM40,>30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0857466484494912],"y":[-0.107005838736611],"text":"PC1: -0.08574665<br />PC2: -0.107005839<br />sizeMerge: HMEC<br />showPCA: 198-IT<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,97,194,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,198-IT,<30)","legendgroup":"(HMEC,198-IT,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-0.0835018505600354],"y":[-0.0981201531920429],"text":"PC1: -0.08350185<br />PC2: -0.098120153<br />sizeMerge: HMEC<br />showPCA: 199-ECM<br />size: <30","type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(255,98,188,1)","opacity":1,"size":5.66929133858268,"symbol":"circle","line":{"width":1.88976377952756,"color":"rgba(0,191,196,1)"}},"hoveron":"points","name":"(HMEC,199-ECM,<30)","legendgroup":"(HMEC,199-ECM,<30)","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":24.2191780821918,"r":7.30593607305936,"b":38.1735159817352,"l":48.9497716894977},"plot_bgcolor":"rgba(235,235,235,1)","paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.100663255238917,0.209967732366294],"tickmode":"array","ticktext":["-0.1","0.0","0.1","0.2"],"tickvals":[-0.1,0,0.1,0.2],"categoryorder":"array","categoryarray":["-0.1","0.0","0.1","0.2"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"PC1 (41.29%)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-0.134513235577775,0.199726618041782],"tickmode":"array","ticktext":["-0.1","0.0","0.1"],"tickvals":[-0.1,0,0.1],"categoryorder":"array","categoryarray":["-0.1","0.0","0.1"],"nticks":null,"ticks":"outside","tickcolor":"rgba(51,51,51,1)","ticklen":3.65296803652968,"tickwidth":0.66417600664176,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(255,255,255,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"PC2 (15.79%)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":"rgba(255,255,255,1)","bordercolor":"transparent","borderwidth":1.88976377952756,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"title":{"text":"showPCA<br />sizeMerge<br />size","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"2ece67298f8e":{"x":{},"y":{},"colour":{},"fill":{},"shape":{},"type":"scatter"}},"cur_data":"2ece67298f8e","visdat":{"2ece67298f8e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+\#`{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 9, fig.height = 8} #meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-") #library(autoplotly) #autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size") #`
 
 ``` r
 mcor <- cor(y$E)
@@ -406,7 +399,7 @@ col <- colorRampPalette(c("blue","white","red"))(20)
 heatmap(x=mcor, col=col, symm=TRUE)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ## Differential expression analysis with limma-voom (My project Cyto)
 
@@ -431,37 +424,37 @@ metaCyto=metaCyto[colnames(yC$E),]
 autoplot(pcaC,data=metaCyto,col="condition",title ="condition")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col="Flowcell",title ="Flowcell")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='RNA.iso.date',shape="condition",title ="RNA.iso.date")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-3.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='size',shape="condition",title ="size")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-4.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-4.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='stim',shape="condition",title ="stim")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-5.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-5.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='Prep',shape="condition",title ="Prep")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-6.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-6.png)<!-- -->
 
 ## Plot Gene
 
@@ -493,13 +486,13 @@ plot.geneIl37 <- function(x){
 plot.geneF("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 plot.gene("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-12-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
 
 ``` r
 #plot.geneIl37("GBP1")
@@ -518,7 +511,7 @@ plot.geneSubset <- function(x){
 plot.geneSubset("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## Clustering
 
@@ -532,19 +525,19 @@ t=data.frame(table(meta$clus_hm))
 plot(hc)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ``` r
 ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3','skyblue'))+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
 ``` r
 autoplot(prcomp(t(BDCorrB)),data=meta, col='clus_hm')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
 ``` r
 summarize_col<-function(col){
@@ -567,7 +560,7 @@ p7=summarize_col('conc')
 cowplot::plot_grid(p2,p3,p4,p5,p6,p7,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ## Comparisons between cluster
 
@@ -603,7 +596,7 @@ res$gene_name=ref_G[gsub(".+\\.","",rownames(res)),3]
 ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point()+facet_grid(~comp)+theme_bw()+scale_color_manual(values=sign_cols)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ## Gene set enrichment analysis(PCA)
 
@@ -666,59 +659,59 @@ head(gsea_res1[order(gsea_res1$padj),],30)
     ##  7:                                                      GOBP_RESPONSE_TO_CYTOKINE
     ##  8:                                             GOBP_REGULATION_OF_IMMUNE_RESPONSE
     ##  9:                              GOBP_POSITIVE_REGULATION_OF_IMMUNE_SYSTEM_PROCESS
-    ## 10:                                       GOBP_CYTOKINE_MEDIATED_SIGNALING_PATHWAY
-    ## 11:                                                        GOBP_CELL_CYCLE_PROCESS
+    ## 10:                                                        GOBP_CELL_CYCLE_PROCESS
+    ## 11:                                       GOBP_CYTOKINE_MEDIATED_SIGNALING_PATHWAY
     ## 12:                                                                GOBP_CELL_CYCLE
     ## 13:                                                        GOBP_MITOTIC_CELL_CYCLE
     ## 14:                                                GOBP_MITOTIC_CELL_CYCLE_PROCESS
     ## 15:                                                       GOBP_CYTOKINE_PRODUCTION
     ## 16:                                                     GOBP_RESPONSE_TO_BACTERIUM
-    ## 17:                                                  GOBP_ADAPTIVE_IMMUNE_RESPONSE
-    ## 18:                                                     GOBP_INFLAMMATORY_RESPONSE
+    ## 17:                                                     GOBP_INFLAMMATORY_RESPONSE
+    ## 18:                                                  GOBP_ADAPTIVE_IMMUNE_RESPONSE
     ## 19:                                                   GOBP_CHROMOSOME_ORGANIZATION
-    ## 20:                               GOBP_REGULATION_OF_RESPONSE_TO_EXTERNAL_STIMULUS
-    ## 21:                                            GOBP_REGULATION_OF_DEFENSE_RESPONSE
+    ## 20:                                            GOBP_REGULATION_OF_DEFENSE_RESPONSE
+    ## 21:                               GOBP_REGULATION_OF_RESPONSE_TO_EXTERNAL_STIMULUS
     ## 22:                                                         GOBP_RESPONSE_TO_VIRUS
-    ## 23:                                                    GOBP_CHROMOSOME_SEGREGATION
-    ## 24:                                              GOBP_DEFENSE_RESPONSE_TO_SYMBIONT
+    ## 23:                                              GOBP_DEFENSE_RESPONSE_TO_SYMBIONT
+    ## 24:                                              GOBP_RESPONSE_TO_INTERFERON_GAMMA
     ## 25:                                                             GOBP_CELL_DIVISION
-    ## 26:                                              GOBP_RESPONSE_TO_INTERFERON_GAMMA
+    ## 26:                                                    GOBP_CHROMOSOME_SEGREGATION
     ## 27:                                                         GOBP_ORGANELLE_FISSION
-    ## 28:                                    GOBP_POSITIVE_REGULATION_OF_IMMUNE_RESPONSE
-    ## 29:                              GOBP_IMMUNE_RESPONSE_REGULATING_SIGNALING_PATHWAY
-    ## 30:                                            GOBP_NUCLEAR_CHROMOSOME_SEGREGATION
+    ## 28:                              GOBP_IMMUNE_RESPONSE_REGULATING_SIGNALING_PATHWAY
+    ## 29:                                            GOBP_NUCLEAR_CHROMOSOME_SEGREGATION
+    ## 30:                                                  GOBP_MITOTIC_NUCLEAR_DIVISION
     ##                                                                            pathway
     ##             pval         padj  log2err         ES       NES size
-    ##  1: 1.000000e-50 3.818000e-47       NA  0.3981921  3.032601  956
-    ##  2: 1.000000e-50 3.818000e-47       NA  0.4154785  3.161108  950
-    ##  3: 5.941392e-49 1.512282e-45 1.825919  0.4427646  3.260176  598
-    ##  4: 5.849880e-47 1.116742e-43 1.785784  0.3729019  2.841209  960
-    ##  5: 3.209605e-44 4.901709e-41 1.732816  0.4618209  3.325487  471
-    ##  6: 1.238287e-39 1.575927e-36 1.640742  0.3644386  2.765911  874
-    ##  7: 1.352771e-35 1.475680e-32 1.549878  0.3892723  2.883177  641
-    ##  8: 5.334961e-35 5.092221e-32 1.536459  0.4088922  2.965495  514
-    ##  9: 6.892951e-31 5.848286e-28 1.446203  0.3932277  2.855932  521
-    ## 10: 1.503943e-30 1.148411e-27 1.439026  0.4626715  3.158699  313
-    ## 11: 2.529668e-30 1.756049e-27 1.431812 -0.3196767 -2.442964  985
-    ## 12: 1.221367e-26 7.395771e-24 1.342234 -0.2756301 -2.177035 1445
-    ## 13: 1.259102e-26 7.395771e-24 1.342234 -0.3303349 -2.473843  769
-    ## 14: 2.682561e-25 1.463146e-22 1.303093 -0.3470908 -2.550614  645
-    ## 15: 3.969297e-25 1.894347e-22 1.303093  0.3767392  2.716566  484
-    ## 16: 3.747952e-25 1.894347e-22 1.303093  0.4208586  2.897310  351
-    ## 17: 6.130413e-25 2.753637e-22 1.295123  0.4767458  3.120219  233
-    ## 18: 1.165537e-24 4.944467e-22 1.287104  0.3767511  2.701091  466
-    ## 19: 5.085225e-24 2.043725e-21 1.270913 -0.3082438 -2.332994  868
-    ## 20: 1.174396e-23 4.483845e-21 1.262740  0.3388596  2.501480  623
-    ## 21: 2.208005e-23 8.028728e-21 1.254513  0.3879737  2.726352  404
-    ## 22: 1.468247e-22 5.096154e-20 1.229504  0.4243921  2.876799  302
-    ## 23: 9.691959e-22 3.217731e-19 1.203975 -0.4187963 -2.829680  300
-    ## 24: 1.071012e-21 3.407603e-19 1.203975  0.4640391  3.020596  224
-    ## 25: 5.375071e-21 1.641762e-18 1.186651 -0.3416942 -2.458839  534
-    ## 26: 7.093841e-21 2.083406e-18 1.177893  0.6070772  3.447233  101
-    ## 27: 1.866806e-20 5.279605e-18 1.169070 -0.3746125 -2.623206  400
-    ## 28: 3.926187e-20 1.070727e-17 1.160180  0.4046202  2.748609  306
-    ## 29: 8.173082e-20 2.152057e-17 1.151221  0.4282213  2.852156  260
-    ## 30: 2.311645e-19 5.883906e-17 1.133090 -0.4325027 -2.835071  242
+    ##  1: 1.000000e-50 3.818000e-47       NA  0.3981921  3.037933  956
+    ##  2: 1.000000e-50 3.818000e-47       NA  0.4154785  3.170595  950
+    ##  3: 9.439762e-48 2.402734e-44 1.803094  0.4427646  3.238550  598
+    ##  4: 8.426677e-46 1.608653e-42 1.762439  0.3729019  2.842187  960
+    ##  5: 3.262467e-43 4.982439e-40 1.714797  0.4618209  3.288135  471
+    ##  6: 1.468316e-40 1.868677e-37 1.659565  0.3644386  2.764064  874
+    ##  7: 1.012569e-35 1.104568e-32 1.556544  0.3892723  2.856587  641
+    ##  8: 1.090100e-32 1.040500e-29 1.488540  0.4088922  2.932679  514
+    ##  9: 2.498820e-31 2.120110e-28 1.453345  0.3932277  2.829633  521
+    ## 10: 1.886484e-30 1.440519e-27 1.431812 -0.3196767 -2.442669  985
+    ## 11: 1.017757e-29 7.065081e-27 1.417276  0.4626715  3.106549  313
+    ## 12: 9.732641e-27 6.193204e-24 1.342234 -0.2756301 -2.171920 1445
+    ## 13: 9.839079e-26 5.366515e-23 1.318889 -0.3303349 -2.475646  769
+    ## 14: 9.369821e-26 5.366515e-23 1.318889 -0.3470908 -2.560975  645
+    ## 15: 6.959498e-25 3.542849e-22 1.295123  0.3767392  2.694702  484
+    ## 16: 8.981978e-25 4.286649e-22 1.287104  0.4208586  2.892121  351
+    ## 17: 2.217991e-24 9.962695e-22 1.279034  0.3767511  2.675259  466
+    ## 18: 3.036265e-24 1.288051e-21 1.279034  0.4767458  3.098403  233
+    ## 19: 1.002308e-23 3.826811e-21 1.262740 -0.3082438 -2.331604  868
+    ## 20: 9.590698e-24 3.826811e-21 1.262740  0.3879737  2.695804  404
+    ## 21: 1.275689e-23 4.638650e-21 1.262740  0.3388596  2.487095  623
+    ## 22: 4.926920e-22 1.710089e-19 1.212545  0.4243921  2.837762  302
+    ## 23: 5.629230e-22 1.868904e-19 1.212545  0.4640391  2.991863  224
+    ## 24: 4.285907e-21 1.363633e-18 1.186651  0.6070772  3.385216  101
+    ## 25: 1.094343e-20 3.342562e-18 1.177893 -0.3416942 -2.456205  534
+    ## 26: 1.239615e-20 3.640654e-18 1.177893 -0.4187963 -2.798760  300
+    ## 27: 2.504760e-20 7.083833e-18 1.169070 -0.3746125 -2.596599  400
+    ## 28: 4.816080e-20 1.313414e-17 1.160180  0.4282213  2.831392  260
+    ## 29: 6.990188e-20 1.840589e-17 1.151221 -0.4325027 -2.778570  242
+    ## 30: 2.380430e-19 6.058988e-17 1.133090 -0.4142816 -2.716118  266
     ##             pval         padj  log2err         ES       NES size
     ##                                     leadingEdge
     ##  1:      MLKL,ADAR,ZNFX1,PLSCR1,RNF213,NUB1,...
@@ -730,27 +723,27 @@ head(gsea_res1[order(gsea_res1$padj),],30)
     ##  7:      ADAR,PLSCR1,CD274,NUB1,DDX58,IFIH1,...
     ##  8:    ADAR,ZNFX1,PLSCR1,CD274,DDX58,TRAFD1,...
     ##  9: ZNFX1,PLSCR1,CD274,DDX58,DHX58,TNFSF13B,...
-    ## 10:   ADAR,SAMHD1,USP18,TNFSF13B,IRF7,STAT2,...
-    ## 11:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,TOP2A,...
+    ## 10:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,TOP2A,...
+    ## 11:   ADAR,SAMHD1,USP18,TNFSF13B,IRF7,STAT2,...
     ## 12:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,WDHD1,...
     ## 13:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,WDHD1,...
     ## 14:   MAP3K20,TACC2,CDK1,KIF11,MAD2L1,HSPA2,...
     ## 15:     CD274,DDX58,IFIH1,DHX58,PML,EIF2AK2,...
     ## 16:     ZNFX1,CD274,RNF213,DHX58,IFI44,OPTN,...
-    ## 17:     CD274,RNF19B,TNFSF13B,IRF7,TAP1,B2M,...
-    ## 18:      PLSCR1,USP18,CD47,IFI35,AIM2,KARS1,...
+    ## 17:      PLSCR1,USP18,CD47,IFI35,AIM2,KARS1,...
+    ## 18:     CD274,RNF19B,TNFSF13B,IRF7,TAP1,B2M,...
     ## 19:     CDK1,TOP2A,RPA1,MAD2L1,HSPA2,NAP1L3,...
     ## 20:    ADAR,ZNFX1,PLSCR1,DDX58,TRAFD1,DHX58,...
     ## 21:    ADAR,ZNFX1,PLSCR1,DDX58,TRAFD1,DHX58,...
     ## 22:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
-    ## 23:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
-    ## 24:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
+    ## 23:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
+    ## 24:          NUB1,CD47,SHFL,GCH1,PTPN2,GBP1,...
     ## 25:     CDK1,KIF11,TOP2A,MAD2L1,SPC24,CDCA3,...
-    ## 26:          NUB1,CD47,SHFL,GCH1,PTPN2,GBP1,...
+    ## 26:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
     ## 27:   KIF11,TOP2A,MAD2L1,HSPA2,CENPK,TRIP13,...
-    ## 28:  ZNFX1,PLSCR1,CD274,TNFSF13B,CD47,IFI35,...
-    ## 29:     PLSCR1,DDX58,IFIH1,DHX58,CD47,IFI35,...
-    ## 30:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
+    ## 28:     PLSCR1,DDX58,IFIH1,DHX58,CD47,IFI35,...
+    ## 29:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
+    ## 30: KIF11,MAD2L1,CENPK,TRIP13,PPP2R2D,BUB1B,...
     ##                                     leadingEdge
 
 ``` r
@@ -761,98 +754,98 @@ head(gsea_res2[order(gsea_res2$padj),],30)
     ##  1:                                                GOBP_TRIGLYCERIDE_RICH_LIPOPROTEIN_PARTICLE_CLEARANCE
     ##  2:                                                             GOBP_NOREPINEPHRINE_BIOSYNTHETIC_PROCESS
     ##  3:                                                        GOBP_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
-    ##  4:                                               GOBP_POSITIVE_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
-    ##  5:                                                                     GOBP_DENDRITIC_SPINE_DEVELOPMENT
-    ##  6:                                                GOBP_SPINAL_CORD_OLIGODENDROCYTE_CELL_DIFFERENTIATION
-    ##  7:                                                                        GOBP_LUNG_SACCULE_DEVELOPMENT
-    ##  8:                                                                          GOBP_MOTOR_NEURON_MIGRATION
-    ##  9:                                  GOBP_NEGATIVE_REGULATION_OF_CHEMOKINE_C_C_MOTIF_LIGAND_5_PRODUCTION
-    ## 10:                                                                          GOBP_PRONEPHROS_DEVELOPMENT
-    ## 11:                                                          GOBP_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
-    ## 12:                                                       GOBP_REGULATION_OF_DENDRITIC_SPINE_DEVELOPMENT
-    ## 13:                                                                        GOBP_MAMMARY_GLAND_INVOLUTION
-    ## 14:                                        GOBP_NEGATIVE_REGULATION_OF_EXTRACELLULAR_MATRIX_ORGANIZATION
+    ##  4:                                                GOBP_SPINAL_CORD_OLIGODENDROCYTE_CELL_DIFFERENTIATION
+    ##  5:                                               GOBP_POSITIVE_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
+    ##  6:                                                                          GOBP_MOTOR_NEURON_MIGRATION
+    ##  7:                                                          GOBP_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
+    ##  8:                                                                          GOBP_PRONEPHROS_DEVELOPMENT
+    ##  9:                                                                     GOBP_DENDRITIC_SPINE_DEVELOPMENT
+    ## 10:                                                                        GOBP_LUNG_SACCULE_DEVELOPMENT
+    ## 11:                                                                     GOBP_MYCOTOXIN_METABOLIC_PROCESS
+    ## 12:                                                                        GOBP_MAMMARY_GLAND_INVOLUTION
+    ## 13:                     GOBP_HETEROPHILIC_CELL_CELL_ADHESION_VIA_PLASMA_MEMBRANE_CELL_ADHESION_MOLECULES
+    ## 14:                                  GOBP_NEGATIVE_REGULATION_OF_CHEMOKINE_C_C_MOTIF_LIGAND_5_PRODUCTION
     ## 15:                                     GOBP_NEGATIVE_REGULATION_OF_SMOOTH_MUSCLE_CELL_APOPTOTIC_PROCESS
-    ## 16:                                                             GOBP_STABILIZATION_OF_MEMBRANE_POTENTIAL
-    ## 17:                                                                     GOBP_MYCOTOXIN_METABOLIC_PROCESS
+    ## 16: GOBP_POSITIVE_REGULATION_OF_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS_DEADENYLATION_DEPENDENT_DECAY
+    ## 17:                                                       GOBP_REGULATION_OF_DENDRITIC_SPINE_DEVELOPMENT
     ## 18:                                                         GOBP_REGULATION_OF_METALLOPEPTIDASE_ACTIVITY
-    ## 19:                                                         GOBP_CELLULAR_RESPONSE_TO_FLUID_SHEAR_STRESS
-    ## 20:                                                                   GOBP_DENDRITIC_SPINE_MORPHOGENESIS
-    ## 21:                                                                    GOBP_ISOCITRATE_METABOLIC_PROCESS
-    ## 22: GOBP_POSITIVE_REGULATION_OF_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS_DEADENYLATION_DEPENDENT_DECAY
-    ## 23:                                   GOBP_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
-    ## 24:                                                          GOBP_REGULATION_OF_APOPTOTIC_CELL_CLEARANCE
-    ## 25:                                                         GOBP_REGULATION_OF_STEM_CELL_DIFFERENTIATION
-    ## 26:                                                                           GOBP_RESPONSE_TO_BACTERIUM
-    ## 27:                                                        GOBP_ACTOMYOSIN_CONTRACTILE_RING_ORGANIZATION
-    ## 28:                                                     GOBP_APOPTOTIC_PROCESS_INVOLVED_IN_MORPHOGENESIS
-    ## 29:                                      GOBP_POSITIVE_REGULATION_OF_CARDIAC_MUSCLE_CELL_DIFFERENTIATION
-    ## 30:                                                                     GOBP_REGULATION_OF_FEAR_RESPONSE
+    ## 19:                                                                           GOBP_RESPONSE_TO_BACTERIUM
+    ## 20:                                                             GOBP_STABILIZATION_OF_MEMBRANE_POTENTIAL
+    ## 21:                                                                  GOBP_ADHERENS_JUNCTION_ORGANIZATION
+    ## 22:                                                         GOBP_CELLULAR_RESPONSE_TO_FLUID_SHEAR_STRESS
+    ## 23:                                                                   GOBP_DENDRITIC_SPINE_MORPHOGENESIS
+    ## 24:                                                                    GOBP_ISOCITRATE_METABOLIC_PROCESS
+    ## 25:                                                 GOBP_LEARNED_VOCALIZATION_BEHAVIOR_OR_VOCAL_LEARNING
+    ## 26:                                        GOBP_NEGATIVE_REGULATION_OF_EXTRACELLULAR_MATRIX_ORGANIZATION
+    ## 27:                                      GOBP_POSITIVE_REGULATION_OF_CARDIAC_MUSCLE_CELL_DIFFERENTIATION
+    ## 28:                                   GOBP_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
+    ## 29:                                                          GOBP_REGULATION_OF_APOPTOTIC_CELL_CLEARANCE
+    ## 30:                                                     GOBP_REGULATION_OF_DENDRITIC_SPINE_MORPHOGENESIS
     ##                                                                                                  pathway
     ##             pval         padj   log2err         ES       NES size
-    ##  1: 2.222913e-36 1.695638e-32 1.5697917 -0.9988198 -1.331801    1
-    ##  2: 4.830330e-05 1.228192e-01 0.5573322 -0.9895257 -1.319408    1
-    ##  3: 3.788518e-05 1.228192e-01 0.5573322  0.8488693  1.452572   22
-    ##  4: 8.751243e-05 1.668862e-01 0.5384341  0.9318825  1.524019   12
-    ##  5: 1.938514e-04 2.685409e-01 0.5188481  0.6817059  1.235441   73
-    ##  6: 2.112278e-04 2.685409e-01 0.5188481  0.9993254  1.377307    2
-    ##  7: 3.051873e-04 3.260146e-01 0.4984931  0.9709215  1.502088    7
-    ##  8: 4.135602e-04 3.260146e-01 0.4984931 -0.9594983 -1.633334    3
-    ##  9: 4.686795e-04 3.260146e-01 0.4984931  0.9888266  1.450448    4
-    ## 10: 4.701312e-04 3.260146e-01 0.4984931  0.9891603  1.479485    5
-    ## 11: 3.889460e-04 3.260146e-01 0.4984931  0.9442067  1.504517    9
-    ## 12: 5.999077e-04 3.813414e-01 0.4772708  0.7100760  1.264773   44
-    ## 13: 7.316982e-04 4.293380e-01 0.4772708  0.9851311  1.473459    5
-    ## 14: 9.084996e-04 4.366228e-01 0.4772708  0.9054169  1.459223   10
-    ## 15: 9.158318e-04 4.366228e-01 0.4772708  0.9828138  1.469993    5
-    ## 16: 8.479931e-04 4.366228e-01 0.4772708  0.9833421  1.470783    5
-    ## 17: 1.040122e-03 4.420833e-01 0.4550599  0.9986660  1.376398    2
-    ## 18: 1.043196e-03 4.420833e-01 0.4550599  0.8965655  1.455191   11
-    ## 19: 1.445043e-03 4.555684e-01 0.4550599  0.8042981  1.361211   19
-    ## 20: 1.500267e-03 4.555684e-01 0.4550599  0.7002684  1.249384   46
-    ## 21: 1.432759e-03 4.555684e-01 0.4550599  0.9654274  1.468398    6
-    ## 22: 1.501767e-03 4.555684e-01 0.4550599  0.8604077  1.417350   13
-    ## 23: 1.552803e-03 4.555684e-01 0.4550599  0.9442120  1.460767    7
-    ## 24: 1.280147e-03 4.555684e-01 0.4550599  0.9382909  1.474401    8
-    ## 25: 1.371412e-03 4.555684e-01 0.4550599  0.6814812  1.218069   49
-    ## 26: 1.205740e-03 4.555684e-01 0.4550599  0.5829206  1.094613  351
-    ## 27: 1.853949e-03 4.713974e-01 0.4550599  0.9400900  1.454390    7
-    ## 28: 1.794795e-03 4.713974e-01 0.4550599  0.7997623  1.353534   19
-    ## 29: 1.728659e-03 4.713974e-01 0.4550599  0.9294366  1.460488    8
-    ## 30: 1.803262e-03 4.713974e-01 0.4550599 -0.7929457 -1.605038    6
+    ##  1: 4.707193e-31 3.586881e-27 1.4462029 -0.9988198 -1.329274    1
+    ##  2: 2.604307e-05 9.922411e-02 0.5756103 -0.9895257 -1.316905    1
+    ##  3: 4.293645e-05 1.090586e-01 0.5573322  0.8488693  1.452888   22
+    ##  4: 7.032368e-05 1.339666e-01 0.5384341  0.9993254  1.382083    2
+    ##  5: 1.173516e-04 1.788439e-01 0.5384341  0.9318825  1.524817   12
+    ##  6: 2.114554e-04 2.685483e-01 0.5188481 -0.9594983 -1.609633    3
+    ##  7: 2.868151e-04 3.122187e-01 0.4984931  0.9442067  1.502596    9
+    ##  8: 3.559127e-04 3.390068e-01 0.4984931  0.9891603  1.479103    5
+    ##  9: 4.716860e-04 3.474214e-01 0.4984931  0.6817059  1.236595   73
+    ## 10: 5.015269e-04 3.474214e-01 0.4772708  0.9709215  1.502124    7
+    ## 11: 4.836053e-04 3.474214e-01 0.4984931  0.9986660  1.381171    2
+    ## 12: 5.596229e-04 3.553605e-01 0.4772708  0.9851311  1.473079    5
+    ## 13: 9.664383e-04 3.682130e-01 0.4772708  0.7668054  1.315970   23
+    ## 14: 9.168014e-04 3.682130e-01 0.4772708  0.9888266  1.443270    4
+    ## 15: 7.348052e-04 3.682130e-01 0.4772708  0.9828138  1.469613    5
+    ## 16: 9.232309e-04 3.682130e-01 0.4772708  0.8604077  1.417548   13
+    ## 17: 9.480305e-04 3.682130e-01 0.4772708  0.7100760  1.264697   44
+    ## 18: 8.146279e-04 3.682130e-01 0.4772708  0.8965655  1.453306   11
+    ## 19: 9.480305e-04 3.682130e-01 0.4772708  0.5829206  1.095232  351
+    ## 20: 6.958758e-04 3.682130e-01 0.4772708  0.9833421  1.470404    5
+    ## 21: 1.684347e-03 4.510385e-01 0.4550599  0.7194758  1.264739   35
+    ## 22: 1.796590e-03 4.510385e-01 0.4550599  0.8042981  1.363294   19
+    ## 23: 1.371412e-03 4.510385e-01 0.4550599  0.7002684  1.249632   46
+    ## 24: 1.462278e-03 4.510385e-01 0.4550599  0.9654274  1.468008    6
+    ## 25: 1.834933e-03 4.510385e-01 0.4550599 -0.8077916 -1.516322    5
+    ## 26: 1.564871e-03 4.510385e-01 0.4550599  0.9054169  1.452831   10
+    ## 27: 1.725159e-03 4.510385e-01 0.4550599  0.9294366  1.459563    8
+    ## 28: 1.761640e-03 4.510385e-01 0.4550599  0.9442120  1.460801    7
+    ## 29: 1.296206e-03 4.510385e-01 0.4550599  0.9382909  1.473468    8
+    ## 30: 1.665939e-03 4.510385e-01 0.4550599  0.7197737  1.265263   35
     ##             pval         padj   log2err         ES       NES size
-    ##                                    leadingEdge
-    ##  1:                                       APOE
-    ##  2:                                      MOXD1
-    ##  3:                      SOX6,ARRB2,DHX36,HEY2
-    ##  4:                                ARRB2,DHX36
-    ##  5:     LZTS3,DIP2A,DISC1,EFNA1,DHX36,DLG5,...
-    ##  6:                                 SOX6,SOX13
-    ##  7:                                CREB1,GATA6
-    ##  8:                            RELN,VEGFA,NRP1
-    ##  9:                                 OAS3,SIRPA
-    ## 10:                             CEP290,SEC61A1
-    ## 11:                                DTX3L,MGAT3
-    ## 12:      DISC1,EFNA1,DHX36,DLG5,CPEB3,SDK1,...
-    ## 13:                                  CAPN1,BAX
-    ## 14:              ADTRP,TNFRSF1B,EMILIN1,NOTCH1
-    ## 15:                                 ARRB2,LRP6
-    ## 16:                              KCNN4,CHCHD10
-    ## 17:                              NFE2L2,AKR7A3
-    ## 18:                        STAT3,PICALM,DDRGK1
-    ## 19:                 NFE2L2,ASS1,SRC,PTGS2,KLF2
-    ## 20: LZTS3,DIP2A,EFNA1,DHX36,SIPA1L1,PDLIM5,...
-    ## 21:                                 ACO2,IDH3G
-    ## 22:              TNRC6C,DHX36,AGO2,CPEB3,ZFP36
-    ## 23:                                DTX3L,MGAT3
-    ## 24:                              C3,C4A,C4B,C2
-    ## 25:      SOX6,NFE2L2,PUS7,DHX36,SOX5,STAT3,...
-    ## 26:        CXCL8,OAS2,OAS3,ASS1,IDO1,SIRPA,...
-    ## 27:                                 VPS4A,RTKN
-    ## 28:                 TNFRSF1B,NOTCH1,CRYAB,FZD5
-    ## 29:                                ARRB2,KAT2A
-    ## 30:           APOE,NPAS2,MEF2C,PENK,RAG1,EPHB2
-    ##                                    leadingEdge
+    ##                                       leadingEdge
+    ##  1:                                          APOE
+    ##  2:                                         MOXD1
+    ##  3:                         SOX6,ARRB2,DHX36,HEY2
+    ##  4:                                    SOX6,SOX13
+    ##  5:                                   ARRB2,DHX36
+    ##  6:                               RELN,VEGFA,NRP1
+    ##  7:                                   DTX3L,MGAT3
+    ##  8:                                CEP290,SEC61A1
+    ##  9:        LZTS3,DIP2A,DISC1,EFNA1,DHX36,DLG5,...
+    ## 10:                                   CREB1,GATA6
+    ## 11:                                 NFE2L2,AKR7A3
+    ## 12:                                     CAPN1,BAX
+    ## 13:                       CD164,FAT4,ICAM1,AMIGO2
+    ## 14:                                    OAS3,SIRPA
+    ## 15:                                    ARRB2,LRP6
+    ## 16:                 TNRC6C,DHX36,AGO2,CPEB3,ZFP36
+    ## 17:         DISC1,EFNA1,DHX36,DLG5,CPEB3,SDK1,...
+    ## 18:                           STAT3,PICALM,DDRGK1
+    ## 19:           CXCL8,OAS2,OAS3,ASS1,IDO1,SIRPA,...
+    ## 20:                                 KCNN4,CHCHD10
+    ## 21:           CDH24,PTPN23,VCL,TJP1,JAM3,DLG5,...
+    ## 22:                    NFE2L2,ASS1,SRC,PTGS2,KLF2
+    ## 23:    LZTS3,DIP2A,EFNA1,DHX36,SIPA1L1,PDLIM5,...
+    ## 24:                                    ACO2,IDH3G
+    ## 25:                  SHANK3,NRXN2,STRA6,HTT,NRXN1
+    ## 26:                 ADTRP,TNFRSF1B,EMILIN1,NOTCH1
+    ## 27:                                   ARRB2,KAT2A
+    ## 28:                                   DTX3L,MGAT3
+    ## 29:                                 C3,C4A,C4B,C2
+    ## 30: LZTS3,EFNA1,DHX36,SIPA1L1,PDLIM5,ARHGAP44,...
+    ##                                       leadingEdge
 
 ## Stim only
 
@@ -861,7 +854,7 @@ Stim=subset(meta,condition=='AntiInflammatory'|condition=='ProInflammatory')
 autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,col='condition')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ``` r
 #Stim$cd3e = BDCorrB['ENSG00000198851', rownames(Stim)]
@@ -893,7 +886,7 @@ a9=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='CTNND1',shape=21
 cowplot::plot_grid(a1,a2,a3,a4,a5,a6,a7,a8,a9,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ## Clustering only Stim
 
@@ -909,19 +902,19 @@ t=data.frame(table(meta$clus_hm))
 plot(hc)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3'))+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-2.png)<!-- -->
 
 ``` r
 autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=subtypeStim,col='subtypeStim')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-3.png)<!-- -->
 
 ``` r
 summarize_col<-function(col){
@@ -947,7 +940,7 @@ p5=summarize_col('condition1')
 cowplot::plot_grid(p1,p2,p3,p4,p5,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ``` r
 #subset(lesions,lesion_type=='C2'&tissue=='PV')
@@ -983,4 +976,4 @@ res$comp="C1_vs_C2"
 ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point_interactive(aes(x=logFC,y=-log10(P.Value),color=sign,tooltip = gene_name,data_id = gene_name))+theme_bw()+scale_color_manual(values=sign_cols)+ geom_label_repel(data=subset(res,show==T),aes(label=gene_name),col='black',size=3,force=30,fill = alpha(c("white"),0.5))+facet_grid(~comp)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
