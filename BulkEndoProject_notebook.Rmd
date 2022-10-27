@@ -1,0 +1,557 @@
+---
+title: "bulkseq endos analysis"
+output: github_document
+always_allow_html: yes
+---
+
+This is an analysis performed on the bulk RNA-Seq dataset
+
+The workflow is as follows:  
+1. Inspect variance in the dataset (Filtering, Normalization, PCA)  
+2. Perform differential expression analysis (Using limma)  
+3. Annotate biological signatures found by DEA (GSEA)  
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(BiocManager);
+library(DESeq2);
+library(edgeR);
+library(fgsea);
+library(org.Hs.eg.db);
+library(ggplot2);
+library(enrichR);
+library(VennDiagram);
+library(ggpubr);
+library(ggrepel);
+library(PCAtools)
+library(RColorBrewer);
+library(ggiraph);
+library(UpSetR);
+library(rhandsontable);
+library(nloptr);
+library(ggVennDiagram);
+library(stringr);
+library(knitr);
+library(openxlsx)
+library(qusage);
+library(ggfortify)
+library(dplyr)
+```
+
+### Counts list
+```{r echo=TRUE, message=FALSE, warning=FALSE, results='asis'}
+
+dat = read.csv('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/mycountmatrix.csv',header = TRUE, sep = ";", row.names = 1 )
+dat = subset(dat, select = -c(S91.1) )
+knitr::kable(dat[1:10, 1:12], caption ="A Knitr kable")
+#length(colnames(dat))
+```
+
+
+### Meta data
+```{r echo=TRUE, message=FALSE, warning=FALSE, results='asis'}
+
+meta = read.xlsx('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/20220721_Metadata_bulkseq_endos_run1.xlsx')
+rownames(meta) <- paste0("S",meta$New.tube.label,sep = "")
+meta$RNA.iso.date <- as.Date(meta$RNA.iso.date, origin="1900-01-01")
+meta$RNA.iso.date <- factor(meta$RNA.iso.date)
+meta$Prep <- factor(meta$Prep)
+names(meta)[names(meta) == "Proj.3(Cyto)"] <- "proj.Cyto"
+names(meta)[names(meta) == "Proj1(37)"] <- "proj.IL37"
+names(meta)[names(meta) == "Proj2(IL4)"] <- "proj.IL4"
+names(meta)[names(meta) == "Flowcell#"] <- "Flowcell"
+meta$proj.Cyto[2]="Cyto"
+meta$proj.Cyto[5]="Cyto"
+meta$stim[8]="IL1b"
+
+meta$stim=gsub("40% ACM","ACM40",meta$stim)
+meta$condition <- "NA"
+meta$stimConc = "NA"
+for(i in 1:nrow(meta)){
+    if(meta$stim[i]=="IL23"|meta$stim[i]=="IL1b"|meta$stim[i]=="TNFa"|meta$stim[i]=="IFNg"|meta$stim[i]=="IL6"|meta$stim[i]=="IL17"|meta$stim[i]=="GMCSF"){
+        meta$condition[i] <- "ProInflammatory"
+    }
+    else if(meta$stim[i]=="IL35"|meta$stim[i]=="IL10"|meta$stim[i]=="TGFB1"|meta$stim[i]=="IL37"|meta$stim[i]=="IL4"){
+        meta$condition[i]<-"AntiInflammatory"
+    }
+    else if(meta$stim[i]=="IT"|meta$stim[i]=="ECM"|meta$stim[i]=="ACM40"){
+        meta$condition[i]<-"Control"
+    }
+    else{
+        meta$condition[i]<-"ControlAntiInflammtory"
+    }
+}
+
+#for(i in 1:nrow(meta)){
+#    if(rownames(meta)[i]=="S109"){
+#        meta$test[i] <- "109"
+#    }
+#    else if(rownames(meta)[i]=="S110"){
+#        meta$test[i] <- "110"
+#    }
+#    else if(rownames(meta)[i]=="S111"){
+#        meta$test[i] <- "111"
+#    }
+#    else if(rownames(meta)[i]=="S197"){
+#        meta$test[i] <- "197"
+#    }
+#    else if(rownames(meta)[i]=="S198"){
+#        meta$test[i] <- "198"
+#    } 
+#    else if(rownames(meta)[i]=="S199"){
+#        meta$test[i] <- "199"
+#    }
+#    else{
+#        meta$test[i] <- "other"
+#    }
+#} 
+    
+meta <- meta %>% dplyr::select(Prep,size,p,stim,condition, everything())   
+genomic_idx <- match(rownames(meta), colnames(dat))
+dat  <- dat[ , genomic_idx]
+meta$sizeMerge = "NA"
+for(i in 1:nrow(meta)){
+    if(meta$size[i]==">30"|meta$size[i]=="<30"){
+        meta$sizeMerge[i] <- "HMEC"
+    }
+    else{
+        meta$sizeMerge[i] <- "HBEC"
+    }
+}
+
+
+knitr::kable(meta[,1:11], caption ="A Knitr kable")
+
+```
+
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, results='asis'}
+metaF = read.xlsx('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/20220815_Overview_bulkseq_endo_cytokines_FIXED_v1.xlsx')
+rownames(metaF) <- paste0("S",metaF$New.tube.label,sep = "") 
+names(metaF)[names(metaF) == "Flowcell#"] <- "Flowcell"
+genomic_idx <- match(rownames(meta), colnames(dat))
+dat  <- dat[ , genomic_idx]
+metaF$Cytokine <- gsub("TGFB1","TGFb1",metaF$Cytokine)
+metaF$Cytokine <- gsub("TGFB","TGFb1",metaF$Cytokine)
+metaF$Cytokine <- gsub("IL1B","IL1b",metaF$Cytokine)
+#knitr::kable(metaF, caption ="A Knitr kable")
+
+sign_cols=c(DN='deepskyblue',NS='grey80',UP='tomato')
+go = read.gmt('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/GO/c5.go.bp.v7.5.1.symbols.gmt')
+mf = read.gmt('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/GO/c5.go.mf.v7.5.1.symbols.gmt')
+kegg = read.gmt('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/GO/c2.cp.kegg.v7.5.1.symbols.gmt')
+tft = read.gmt('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/GO/c3.tft.v7.5.1.symbols.gmt')
+## Differential expression analysis with limma-voom
+
+### Filtering to remove lowly expressed genes + Normalization for composition bias
+
+d0 <- DGEList(dat)
+d0 <- calcNormFactors(d0)
+cutoff <- 2
+drop <- which(apply(cpm(d0), 1, max) < cutoff)
+d <- d0[-drop,]
+
+
+mmF <- model.matrix(~ 0 + Cytokine, data=metaF[colnames(d),])
+yF <- voom(d, mmF, plot = F)
+```
+
+
+
+
+## Differential expression analysis with limma-voom
+
+### Filtering to remove lowly expressed genes + Normalization for composition bias
+
+use the *edgeR/limma* workflow to filter out lowly expressed genes. *Voom* is used to normalize the raw counts. A linear mixed model is used to fit the expression values. Defining the model is done with the model.matrix function of edgeR. In the model are included factors of interest (group). If a batch/patient effect is detected, it can be added to the model to account for its effect.
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 4, fig.height = 3}
+d0 <- DGEList(dat)
+d0 <- calcNormFactors(d0)
+cutoff <- 2
+drop <- which(apply(cpm(d0), 1, max) < cutoff)
+d <- d0[-drop,]
+
+
+mm <- model.matrix(~ 0 + stim + Flowcell , data=meta[colnames(d),])
+
+# Without filtering low expressed genes
+y <- voom(d0, mm, plot = T)
+
+# Filtering low expressed genes
+y <- voom(d, mm, plot = T)
+```
+
+```{r}
+##gene name reference(ref_G)
+conv_B=AnnotationDbi::select(org.Hs.eg.db,keys=rownames(y$E),keytype='ENSEMBL',columns=c('GENENAME','SYMBOL'))
+ref_G=conv_B[!duplicated(conv_B[,1]),]
+rownames(ref_G)=ref_G[,1]
+##
+```
+
+## PCA
+Perform a *PCA* on the normalized samples and identify main factors of variation. 
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 7, fig.height = 6}
+### PCA ALL PROJECT Version Modif
+pcaF = prcomp(t(yF$E))
+metaF=metaF[colnames(yF$E),]
+metaF$PC1 = pcaF$x[,1]
+metaF$PC2 = pcaF$x[,2]
+meta=data.frame(meta)
+autoplot(pcaF,data=meta,col="Flowcell",title ="flowcell")
+autoplot(pcaF,data=meta,col='size',title ="size",label = TRUE)
+autoplot(pcaF,data=meta,col='stim',title ="stim")
+```
+
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 7, fig.height = 6}
+### PCA ALL PROJECT First Version
+pca = prcomp(t(y$E))
+meta=meta[colnames(y$E),]
+meta$PC1 = pca$x[,1]
+meta$PC2 = pca$x[,2]
+meta=data.frame(meta)
+#autoplot(pca,data=meta,col='test',title ="condition", label = TRUE, label.size = 5)
+autoplot(pca,data=meta,col='condition',title ="condition")
+autoplot(pca,data=meta,col="Flowcell",shape="condition",title ="flowcell")
+autoplot(pca,data=meta,col='RNA.iso.date',shape="condition",title ="RNA.iso.date")
+autoplot(pca,data=meta,col='size',shape="condition",title ="size",label = TRUE)
+autoplot(pca,data=meta,col='sizeMerge',shape="size",title ="size")
+autoplot(pca,data=meta,col='stim',shape="condition",title ="stim")
+autoplot(pca,data=meta,col='Prep',shape="condition",title ="Prep")
+
+#BDCorrB <- removeBatchEffect(y$E,batch = meta$Flowcell)
+#BD1B <- prcomp(t(BDCorrB))
+#autoplot(BD1B,data=meta,col="Flowcell",title ="flowcell")
+
+BDCorrB <- removeBatchEffect(y$E,batch = meta$Flowcell)
+BD1B <- pca(BDCorrB, metadata = meta)
+biplot(BD1B, colby = 'size',shape = 'condition', hline = 0, vline = 0,legendPosition = 'right', lab="",title="size")
+biplot(BD1B, colby = 'sizeMerge',shape = 'condition', hline = 0, vline = 0,legendPosition = 'right', lab="",title="sizeMerge")
+```
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 9, fig.height = 8}
+meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-")
+library(autoplotly)
+autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size")
+
+```
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 7, fig.height = 6}
+mcor <- cor(y$E)
+#library(corrplot)
+#corrplot(mcor,type="upper", order="hclust",tl.col="black", tl.srt=45)
+col <- colorRampPalette(c("blue","white","red"))(20)
+heatmap(x=mcor, col=col, symm=TRUE)
+```
+
+
+## Differential expression analysis with limma-voom (My project Cyto)
+
+### Filtering to remove lowly expressed genes + Normalization for composition bias
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 5, fig.height = 4}
+
+d0 <- DGEList(dat)
+d0 <- calcNormFactors(d0)
+cutoff <- 2
+drop <- which(apply(cpm(d0), 1, max) < cutoff)
+d <- d0[-drop,]
+
+metaCyto <- subset(meta, proj.Cyto=="Cyto")
+mmC <- model.matrix(~ 0 +stim+Flowcell, data=metaCyto[colnames(d),])
+
+
+# Filtering low expressed genes
+yC <- voom(d[,rownames(metaCyto)], mmC, plot = F)
+
+pcaC = prcomp(t(yC$E))
+metaCyto=metaCyto[colnames(yC$E),]
+autoplot(pcaC,data=metaCyto,col="condition",title ="condition")
+autoplot(pcaC,data=metaCyto,col="Flowcell",title ="Flowcell")
+autoplot(pcaC,data=metaCyto,col='RNA.iso.date',shape="condition",title ="RNA.iso.date")
+autoplot(pcaC,data=metaCyto,col='size',shape="condition",title ="size")
+autoplot(pcaC,data=metaCyto,col='stim',shape="condition",title ="stim")
+autoplot(pcaC,data=metaCyto,col='Prep',shape="condition",title ="Prep")
+```
+
+## Plot Gene
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 10, fig.height = 5}
+meta$stimConc <- paste(meta$stim,meta$conc)
+meta$stimConc <- gsub("ng/ml","",meta$stimConc)
+meta$stimConc <- gsub("NA","",meta$stimConc)
+
+plot.geneF <- function(x){
+    geneEns <- subset(ref_G,SYMBOL==x)$ENSEMBL
+    metaF$gene = yF$E[geneEns,rownames(metaF)]
+    ggplot(metaF,aes(Cytokine,gene))+geom_boxplot()+geom_point(aes(col=Size))+ggtitle(x)+theme_bw()
+}
+plot.gene <- function(x){
+    geneEns <- subset(ref_G,SYMBOL==x)$ENSEMBL
+    meta$gene = y$E[geneEns,rownames(meta)]
+    ggplot(meta,aes(stimConc,gene))+geom_boxplot()+geom_point(aes(col=sizeMerge))+ggtitle(x)+theme_bw()+theme(axis.text.x=element_text(angle=60,hjust=1))
+}
+
+metaF$New.tube.label <- factor(metaF$New.tube.label)
+metaF$conc <- factor(metaF$conc)
+plot.geneIl37 <- function(x){
+    geneEns <- subset(ref_G,SYMBOL==x)$ENSEMBL
+    metaF$gene = yF$E[geneEns,rownames(metaF)]
+    ggplot(metaF[c("S100","S101","S102","S124","S125","S126","S164","S165","S166","S188","S189","S190"),],aes(conc,gene))+geom_boxplot()+geom_point(aes(col=New.tube.label))+ggtitle(x)+theme_bw()
+}
+
+
+plot.geneF("VCAM1")
+plot.gene("VCAM1")
+#plot.geneIl37("GBP1")
+```
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 4, fig.height = 3}
+meta$New.tube.label <- factor(meta$New.tube.label)
+meta$conc <- factor(meta$conc)
+plot.geneSubset <- function(x){
+    geneEns <- subset(ref_G,SYMBOL==x)$ENSEMBL
+    meta$gene = y$E[geneEns,rownames(meta)]
+    y="IL4"
+    ggplot(subset(meta,stim==y),aes(conc,gene))+geom_boxplot()+geom_point(aes(col=New.tube.label))+ggtitle(label = x,
+              subtitle = y)+theme_bw()
+}
+plot.geneSubset("VCAM1")
+```
+
+
+## Clustering
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.width = 5, fig.height = 4}
+hc=hclust(dist(t(BDCorrB)), method='ward.D2')
+hc_clus=data.frame(cutree(hc, k=3))
+hc_clus[,1]=paste0('C',hc_clus[,1])
+meta$clus_hm=hc_clus[rownames(meta),1]
+t=data.frame(table(meta$clus_hm))
+
+plot(hc)
+ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3','skyblue'))+theme_bw()
+autoplot(prcomp(t(BDCorrB)),data=meta, col='clus_hm')+theme_bw()
+```
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.width = 8, fig.height = 5}
+summarize_col<-function(col){
+  t=table(meta[,c('clus_hm' ,col)])
+  for(i in 1:ncol(t)){t[,i]=t[,i]/sum(t[,i])}
+  for(i in 1:nrow(t)){t[i, ]=t[i,]/sum(t[i,])}
+  t=data.frame(t)
+  p=ggplot(t,aes(clus_hm,Freq,fill=t[,col]))+geom_col(col='white')+labs(fill=col)+theme_bw()
+return(p)
+}
+
+#p1=summarize_col('New.tube.label')
+p2=summarize_col('size')
+p3=summarize_col('sizeMerge')
+p4=summarize_col('Flowcell')+scale_fill_manual(values=c('grey10','grey25','grey50','grey75','grey90'))
+p5=summarize_col('condition')
+p6=summarize_col('stim')
+p7=summarize_col('conc')
+
+cowplot::plot_grid(p2,p3,p4,p5,p6,p7,ncol=3)
+
+```
+
+## Comparisons between cluster
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.width = 6, fig.height = 3}
+mmG <- model.matrix(~ 0 + clus_hm+Flowcell, data=meta[colnames(d),])
+
+# Filtering low expressed genes
+yG <- voom(d[,rownames(meta)], mmG, plot = F)
+
+fitG <- lmFit(yG, mmG)
+contrG <- makeContrasts(
+  A = clus_hmC1 - clus_hmC2,
+  B = clus_hmC1 - clus_hmC3,
+  C = clus_hmC2 - clus_hmC3,
+  levels = colnames(coef(fitG)))
+tmpG <- contrasts.fit(fitG, contrG)
+tmpG <- eBayes(tmpG) 
+
+res <- list()
+res[['C1_vs_C2']] <- topTable(tmpG, sort.by = "P", n = Inf,coef='A')
+res[['C1_vs_C3']] <- topTable(tmpG, sort.by = "P", n = Inf,coef='B')
+res[['C2_vs_C3']] <- topTable(tmpG, sort.by = "P", n = Inf,coef='C')
+
+res[['C1_vs_C2']]$comp='C1_vs_C2'
+res[['C1_vs_C3']]$comp='C1_vs_C3'
+res[['C2_vs_C3']]$comp='C2_vs_C3'
+res=do.call(rbind,res)
+res$sign = 'NS'
+res[which(res$adj.P.Val<0.01&res$logFC>0.5),'sign']='UP'
+res[which(res$adj.P.Val<0.01&res$logFC<(-0.5)),'sign']='DN'
+res$gene_name=ref_G[gsub(".+\\.","",rownames(res)),3]
+
+ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point()+facet_grid(~comp)+theme_bw()+scale_color_manual(values=sign_cols)
+
+```
+
+## Gene set enrichment analysis(PCA)
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 4, fig.height = 3}
+pca = prcomp(t(BDCorrB))$x[,1:2]
+pvals=c()
+est=c()
+for(i in 1:nrow(BDCorrB)){
+  pvals = c(pvals,cor.test(BDCorrB[i,],pca[,1])$p.value)
+  est = c(est,cor.test(BDCorrB[i,],pca[,1])$estimate)
+}
+names(pvals)=rownames (BDCorrB)
+names(pvals)=ref_G[names(pvals),3]
+pvals=pvals[!is.na(names(pvals))]
+
+names(est)=rownames(BDCorrB)
+names(est)=ref_G[names(est),3]
+est=est[!is.na(names(est))]
+
+df = data.frame(cbind(pvals,est[names(pvals)]))
+df$gene = rownames(df)
+pvals=c()
+est=c()
+for(i in 1:nrow(BDCorrB)){
+  pvals = c(pvals,cor.test(BDCorrB[i,],pca[,2])$p.value)
+  est = c(est,cor.test(BDCorrB[i, ],pca[,2])$estimate)
+}
+names(pvals)=rownames(BDCorrB)
+names(pvals)=ref_G[names(pvals),3]
+pvals=pvals[!is.na(names(pvals))]
+
+names(est)=rownames(BDCorrB)
+names(est)=ref_G[names(est),3]
+est=est[!is.na(names(est))]
+
+df2=data.frame(cbind(pvals,est[names(pvals)]))
+
+df$pval_pc2=df2[rownames(df),1]
+df$est_pc2=df2[rownames(df),2]
+
+vec1=df[,2]
+vec2=df[,4]
+
+names(vec1)=rownames(df)
+names(vec2)=rownames(df)
+
+gsea_res1=fgsea(pathways=go,stats=vec1)
+gsea_res2=fgsea(pathways=go,stats=vec2)
+
+head(gsea_res1[order(gsea_res1$padj),],30)
+head(gsea_res2[order(gsea_res2$padj),],30)
+```
+
+## Stim only
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 4, fig.height = 3}
+Stim=subset(meta,condition=='AntiInflammatory'|condition=='ProInflammatory')
+autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,col='condition')+theme_bw()
+```
+
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 6, fig.height = 4}
+#Stim$cd3e = BDCorrB['ENSG00000198851', rownames(Stim)]
+Stim$vcam1 = BDCorrB['ENSG00000162692', rownames(Stim)]
+Stim$icam1 = BDCorrB['ENSG00000090339', rownames(Stim)]
+Stim$mcam = BDCorrB['ENSG00000076706', rownames(Stim)] 
+#Stim$ighg2 = BDCorrB['ENSG00000211893', rownames(Stim)]
+#Stim$ms4a1 = BDCorrB['ENSG00000156738', rownames(Stim)]
+Stim$itga8 = BDCorrB['ENSG00000077943', rownames(Stim)]
+Stim$ocln = BDCorrB['ENSG00000197822', rownames(Stim)]
+Stim$CTNND1 = BDCorrB['ENSG00000198561', rownames(Stim)]
+Stim$TJP1 = BDCorrB['ENSG00000104067', rownames(Stim)]
+Stim$CTNNB1 = BDCorrB['ENSG00000168036', rownames(Stim)]
+Stim$irf1 = BDCorrB['ENSG00000125347', rownames(Stim)] 
+
+
+
+a1=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='vcam1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a2=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='icam1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a3=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='mcam',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a4=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='itga8',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a5=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='irf1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a6=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='CTNNB1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a7=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='TJP1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a8=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='ocln',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+#a9=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='cd24',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+a9=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='CTNND1',shape=21)+scale_fill_gradientn(colors=rev(brewer.pal(11,'RdYlBu')))+theme_bw()
+
+cowplot::plot_grid(a1,a2,a3,a4,a5,a6,a7,a8,a9,ncol=3)
+```
+
+## Clustering only Stim
+```{r echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 5, fig.height = 3}
+hc=hclust(dist(t(BDCorrB[,rownames(Stim)])))
+subtypeStim=data.frame(cutree(hc, k=2))
+subtypeStim[,1]=paste0('C',subtypeStim[,1])
+colnames(subtypeStim)='subtypeStim'
+
+meta$clus_hm=subtypeStim[rownames(meta),1]
+t=data.frame(table(meta$clus_hm))
+
+plot(hc)
+ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3'))+theme_bw()
+autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=subtypeStim,col='subtypeStim')+theme_bw()
+```
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.width = 6, fig.height = 3}
+summarize_col<-function(col){
+  t=table(Stim[,c('condition' ,col)])
+  for(i in 1:ncol(t)){t[,i]=t[,i]/sum(t[,i])}
+  for(i in 1:nrow(t)){t[i, ]=t[i,]/sum(t[i,])}
+  t=data.frame(t)
+  p=ggplot(t,aes(condition,Freq,fill=t[,col]))+geom_col(col='white')+labs(fill=col)+theme_bw()
+  return(p)
+}
+
+Stim <- Stim %>% 
+  mutate(condition1 = condition)
+
+Stim$condition=subtypeStim[rownames(Stim),1]
+
+p1=summarize_col('size')
+p2=summarize_col('sizeMerge')
+p3=summarize_col('Flowcell')+scale_fill_manual(values=c('grey10','grey25','grey50','grey75','grey90'))
+p4=summarize_col('stim')
+p5=summarize_col('condition1')
+
+cowplot::plot_grid(p1,p2,p3,p4,p5,ncol=3)
+
+#subset(lesions,lesion_type=='C2'&tissue=='PV')
+#subset(lesions,lesion_type=='C1'&tissue=='Cortical')
+
+```
+
+
+```{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=FALSE, fig.width = 6, fig.height = 3}
+mmG <- model.matrix(~ 0 + condition+Flowcell, data=Stim)
+
+# Filtering low expressed genes
+yG <- voom(d[,rownames(Stim)], mmG, plot = F)
+
+fitG <- lmFit(yG, mmG)
+contrG <- makeContrasts(
+  A = conditionC1 - conditionC2,
+  levels = colnames(coef(fitG)))
+tmpG <- contrasts.fit(fitG, contrG)
+tmpG <- eBayes(tmpG) 
+
+res <- list()
+res[['C1_vs_C2']] <- topTable(tmpG, sort.by = "P", n = Inf,coef='A')
+
+res=do.call(rbind,res)
+res=res[order(-abs(res$logFC)),]
+res$show = F
+res[1:15,'show']=T
+res$sign = 'NS'
+res[which(res$adj.P.Val<0.01&res$logFC>0.5),'sign']='UP'
+res[which(res$adj.P.Val<0.01&res$logFC<(-0.5)),'sign']='DN'
+res$gene_name=ref_G[gsub(".+\\.","",rownames(res)),3]
+res$comp="C1_vs_C2"
+
+ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point_interactive(aes(x=logFC,y=-log10(P.Value),color=sign,tooltip = gene_name,data_id = gene_name))+theme_bw()+scale_color_manual(values=sign_cols)+ geom_label_repel(data=subset(res,show==T),aes(label=gene_name),col='black',size=3,force=30,fill = alpha(c("white"),0.5))+facet_grid(~comp)
+```
+
+
+
