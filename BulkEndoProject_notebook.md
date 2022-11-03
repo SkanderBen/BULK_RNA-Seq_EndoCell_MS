@@ -33,6 +33,7 @@ A Knitr kable
 
 ``` r
 #length(colnames(dat))
+#write.csv(dat,'/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/mycountmatrix2nov22.csv')
 ```
 
 ### Meta data
@@ -216,6 +217,10 @@ knitr::kable(meta[,1:11], caption ="A Knitr kable")
 A Knitr kable
 
 ``` r
+#write.xlsx(meta, "/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/Metadata_endos_2nov22.xlsx",  col.names = TRUE, row.names = TRUE, append = FALSE)
+```
+
+``` r
 metaF = read.xlsx('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents/UDEM/Master/BulkData/data/Endo/20220815_Overview_bulkseq_endo_cytokines_FIXED_v1.xlsx')
 rownames(metaF) <- paste0("S",metaF$New.tube.label,sep = "") 
 names(metaF)[names(metaF) == "Flowcell#"] <- "Flowcell"
@@ -238,7 +243,7 @@ tft = read.gmt('/Users/skander/Library/CloudStorage/OneDrive-Personnel/Documents
 d0 <- DGEList(dat)
 d0 <- calcNormFactors(d0)
 cutoff <- 2
-drop <- which(apply(cpm(d0), 1, max) < cutoff)
+drop <- which(apply(edgeR::cpm(d0), 1, max) < cutoff)
 d <- d0[-drop,]
 
 
@@ -248,7 +253,44 @@ yF <- voom(d, mmF, plot = F)
 
 ## Differential expression analysis with limma-voom
 
-### Filtering to remove lowly expressed genes + Normalization for composition bias
+### Filtering to remove lowly expressed genes
+
+#### Genes with very low counts across all libraries provide little evidence for differential expression and they interfere with some of the statistical approximations that are used later in the pipeline. They also add to the multiple testing burden when estimating false discovery rates, reducing power to detect differentially expressed genes. These genes should be filtered out prior to further analysis.
+
+``` r
+d0 <- DGEList(dat)
+d0 <- calcNormFactors(d0)
+cutoff <- 2
+drop <- which(apply(edgeR::cpm(d0), 1, max) < cutoff)
+d <- d0[-drop,]
+```
+
+### Library size and distribution plots
+
+#### Plot the library sizes as a barplot to see whether there are any major discrepancies between the samples more easily.
+
+``` r
+barplot(d$samples$lib.size,names=colnames(d),las=2)
+title("Barplot of library sizes")
+```
+
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+#### Box plots to check the distribution of the read counts on the log2 scale
+
+``` r
+# Get log2 counts per million
+logcounts <- cpm(d,log=TRUE)
+# Check distributions of samples using boxplots
+boxplot(logcounts, xlab="", ylab="Log2 counts per million",las=2)
+# Let's add a blue horizontal line that corresponds to the median logCPM
+abline(h=median(logcounts),col="blue")
+title("Boxplots of logCPMs (unnormalised)")
+```
+
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+### Normalization for composition bias
 
 use the *edgeR/limma* workflow to filter out lowly expressed genes.
 *Voom* is used to normalize the raw counts. A linear mixed model is used
@@ -258,27 +300,32 @@ interest (group). If a batch/patient effect is detected, it can be added
 to the model to account for its effect.
 
 ``` r
-d0 <- DGEList(dat)
-d0 <- calcNormFactors(d0)
-cutoff <- 2
-drop <- which(apply(cpm(d0), 1, max) < cutoff)
-d <- d0[-drop,]
-
-
 mm <- model.matrix(~ 0 + stim + Flowcell , data=meta[colnames(d),])
 
 # Without filtering low expressed genes
 y <- voom(d0, mm, plot = T)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
 ``` r
 # Filtering low expressed genes
 y <- voom(d, mm, plot = T)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-5-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
+
+``` r
+par(mfrow=c(1,2))
+boxplot(logcounts, xlab="", ylab="Log2 counts per million",las=2,main="Unnormalised logCPM")
+## Let's add a blue horizontal line that corresponds to the median logCPM
+abline(h=median(logcounts),col="blue")
+boxplot(y$E, xlab="", ylab="Log2 counts per million",las=2,main="Voom transformed logCPM")
+## Let's add a blue horizontal line that corresponds to the median logCPM
+abline(h=median(y$E),col="blue")
+```
+
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ``` r
 ##gene name reference(ref_G)
@@ -293,34 +340,29 @@ rownames(ref_G)=ref_G[,1]
 ##
 ```
 
+``` r
+labels <- paste(rownames(meta), meta$stim)
+group <- factor(paste(meta$condition,meta$size,sep="."))
+glimmaMDS(d, labels=labels, groups=group, width=1200, height=1000,main = "MDS Plot", path = getwd(), folder = "glimma-plots", html = "MDS-Plot", launch = TRUE)
+#glMDSPlot(d, labels=labels, groups=group, folder="mds")
+```
+
 ## PCA
 
 Perform a *PCA* on the normalized samples and identify main factors of
 variation.
 
 ``` r
-### PCA ALL PROJECT Version Modif
-pcaF = prcomp(t(yF$E))
-metaF=metaF[colnames(yF$E),]
-metaF$PC1 = pcaF$x[,1]
-metaF$PC2 = pcaF$x[,2]
-meta=data.frame(meta)
-autoplot(pcaF,data=meta,col="Flowcell",title ="flowcell")
+# ### PCA ALL PROJECT Version Modif
+# pcaF = prcomp(t(yF$E))
+# metaF=metaF[colnames(yF$E),]
+# metaF$PC1 = pcaF$x[,1]
+# metaF$PC2 = pcaF$x[,2]
+# meta=data.frame(meta)
+# autoplot(pcaF,data=meta,col="Flowcell",title ="flowcell")
+# autoplot(pcaF,data=meta,col='size',title ="size",label = TRUE)
+# autoplot(pcaF,data=meta,col='stim',title ="stim")
 ```
-
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
-
-``` r
-autoplot(pcaF,data=meta,col='size',title ="size",label = TRUE)
-```
-
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
-
-``` r
-autoplot(pcaF,data=meta,col='stim',title ="stim")
-```
-
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-7-3.png)<!-- -->
 
 ``` r
 ### PCA ALL PROJECT First Version
@@ -333,43 +375,43 @@ meta=data.frame(meta)
 autoplot(pca,data=meta,col='condition',title ="condition")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col="Flowcell",shape="condition",title ="flowcell")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col='RNA.iso.date',shape="condition",title ="RNA.iso.date")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col='size',shape="condition",title ="size",label = TRUE)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-4.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col='sizeMerge',shape="size",title ="size")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-5.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-5.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col='stim',shape="condition",title ="stim")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-6.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-6.png)<!-- -->
 
 ``` r
 autoplot(pca,data=meta,col='Prep',shape="condition",title ="Prep")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-7.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-7.png)<!-- -->
 
 ``` r
 #BDCorrB <- removeBatchEffect(y$E,batch = meta$Flowcell)
@@ -381,13 +423,13 @@ BD1B <- pca(BDCorrB, metadata = meta)
 biplot(BD1B, colby = 'size',shape = 'condition', hline = 0, vline = 0,legendPosition = 'right', lab="",title="size")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-8.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-8.png)<!-- -->
 
 ``` r
 biplot(BD1B, colby = 'sizeMerge',shape = 'condition', hline = 0, vline = 0,legendPosition = 'right', lab="",title="sizeMerge")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-8-9.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-9.png)<!-- -->
 
 \#`{r  echo=TRUE, message=FALSE, warning=FALSE, paged.print=TRUE, fig.width = 9, fig.height = 8} #meta$showPCA=paste(meta$New.tube.label,meta$stim,sep="-") #library(autoplotly) #autoplotly(pca,data=meta,col='sizeMerge',fill="showPCA",shape="size",title ="size") #`
 
@@ -399,7 +441,7 @@ col <- colorRampPalette(c("blue","white","red"))(20)
 heatmap(x=mcor, col=col, symm=TRUE)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ## Differential expression analysis with limma-voom (My project Cyto)
 
@@ -409,7 +451,7 @@ heatmap(x=mcor, col=col, symm=TRUE)
 d0 <- DGEList(dat)
 d0 <- calcNormFactors(d0)
 cutoff <- 2
-drop <- which(apply(cpm(d0), 1, max) < cutoff)
+drop <- which(apply(edgeR::cpm(d0), 1, max) < cutoff)
 d <- d0[-drop,]
 
 metaCyto <- subset(meta, proj.Cyto=="Cyto")
@@ -424,37 +466,37 @@ metaCyto=metaCyto[colnames(yC$E),]
 autoplot(pcaC,data=metaCyto,col="condition",title ="condition")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col="Flowcell",title ="Flowcell")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-2.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='RNA.iso.date',shape="condition",title ="RNA.iso.date")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-3.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='size',shape="condition",title ="size")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-4.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-4.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='stim',shape="condition",title ="stim")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-5.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-5.png)<!-- -->
 
 ``` r
 autoplot(pcaC,data=metaCyto,col='Prep',shape="condition",title ="Prep")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-10-6.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-6.png)<!-- -->
 
 ## Plot Gene
 
@@ -486,13 +528,13 @@ plot.geneIl37 <- function(x){
 plot.geneF("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
 ``` r
 plot.gene("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-11-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-16-2.png)<!-- -->
 
 ``` r
 #plot.geneIl37("GBP1")
@@ -511,7 +553,7 @@ plot.geneSubset <- function(x){
 plot.geneSubset("VCAM1")
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 ## Clustering
 
@@ -525,19 +567,19 @@ t=data.frame(table(meta$clus_hm))
 plot(hc)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
 
 ``` r
 ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3','skyblue'))+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-2.png)<!-- -->
 
 ``` r
 autoplot(prcomp(t(BDCorrB)),data=meta, col='clus_hm')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-3.png)<!-- -->
 
 ``` r
 summarize_col<-function(col){
@@ -560,7 +602,7 @@ p7=summarize_col('conc')
 cowplot::plot_grid(p2,p3,p4,p5,p6,p7,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ## Comparisons between cluster
 
@@ -596,7 +638,7 @@ res$gene_name=ref_G[gsub(".+\\.","",rownames(res)),3]
 ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point()+facet_grid(~comp)+theme_bw()+scale_color_manual(values=sign_cols)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 ## Gene set enrichment analysis(PCA)
 
@@ -658,60 +700,60 @@ head(gsea_res1[order(gsea_res1$padj),],30)
     ##  6:                                       GOBP_REGULATION_OF_IMMUNE_SYSTEM_PROCESS
     ##  7:                                                      GOBP_RESPONSE_TO_CYTOKINE
     ##  8:                                             GOBP_REGULATION_OF_IMMUNE_RESPONSE
-    ##  9:                              GOBP_POSITIVE_REGULATION_OF_IMMUNE_SYSTEM_PROCESS
-    ## 10:                                                        GOBP_CELL_CYCLE_PROCESS
+    ##  9:                                                        GOBP_CELL_CYCLE_PROCESS
+    ## 10:                              GOBP_POSITIVE_REGULATION_OF_IMMUNE_SYSTEM_PROCESS
     ## 11:                                       GOBP_CYTOKINE_MEDIATED_SIGNALING_PATHWAY
     ## 12:                                                                GOBP_CELL_CYCLE
     ## 13:                                                        GOBP_MITOTIC_CELL_CYCLE
     ## 14:                                                GOBP_MITOTIC_CELL_CYCLE_PROCESS
-    ## 15:                                                       GOBP_CYTOKINE_PRODUCTION
-    ## 16:                                                     GOBP_RESPONSE_TO_BACTERIUM
-    ## 17:                                                     GOBP_INFLAMMATORY_RESPONSE
-    ## 18:                                                  GOBP_ADAPTIVE_IMMUNE_RESPONSE
+    ## 15:                                                     GOBP_RESPONSE_TO_BACTERIUM
+    ## 16:                                                       GOBP_CYTOKINE_PRODUCTION
+    ## 17:                                                  GOBP_ADAPTIVE_IMMUNE_RESPONSE
+    ## 18:                                                     GOBP_INFLAMMATORY_RESPONSE
     ## 19:                                                   GOBP_CHROMOSOME_ORGANIZATION
-    ## 20:                                            GOBP_REGULATION_OF_DEFENSE_RESPONSE
-    ## 21:                               GOBP_REGULATION_OF_RESPONSE_TO_EXTERNAL_STIMULUS
+    ## 20:                               GOBP_REGULATION_OF_RESPONSE_TO_EXTERNAL_STIMULUS
+    ## 21:                                            GOBP_REGULATION_OF_DEFENSE_RESPONSE
     ## 22:                                                         GOBP_RESPONSE_TO_VIRUS
-    ## 23:                                              GOBP_DEFENSE_RESPONSE_TO_SYMBIONT
-    ## 24:                                              GOBP_RESPONSE_TO_INTERFERON_GAMMA
-    ## 25:                                                             GOBP_CELL_DIVISION
-    ## 26:                                                    GOBP_CHROMOSOME_SEGREGATION
+    ## 23:                                                    GOBP_CHROMOSOME_SEGREGATION
+    ## 24:                                              GOBP_DEFENSE_RESPONSE_TO_SYMBIONT
+    ## 25:                                              GOBP_RESPONSE_TO_INTERFERON_GAMMA
+    ## 26:                                                             GOBP_CELL_DIVISION
     ## 27:                                                         GOBP_ORGANELLE_FISSION
     ## 28:                              GOBP_IMMUNE_RESPONSE_REGULATING_SIGNALING_PATHWAY
-    ## 29:                                            GOBP_NUCLEAR_CHROMOSOME_SEGREGATION
-    ## 30:                                                  GOBP_MITOTIC_NUCLEAR_DIVISION
+    ## 29:                                    GOBP_POSITIVE_REGULATION_OF_IMMUNE_RESPONSE
+    ## 30:                                            GOBP_NUCLEAR_CHROMOSOME_SEGREGATION
     ##                                                                            pathway
     ##             pval         padj  log2err         ES       NES size
-    ##  1: 1.000000e-50 3.818000e-47       NA  0.3981921  3.037933  956
-    ##  2: 1.000000e-50 3.818000e-47       NA  0.4154785  3.170595  950
-    ##  3: 9.439762e-48 2.402734e-44 1.803094  0.4427646  3.238550  598
-    ##  4: 8.426677e-46 1.608653e-42 1.762439  0.3729019  2.842187  960
-    ##  5: 3.262467e-43 4.982439e-40 1.714797  0.4618209  3.288135  471
-    ##  6: 1.468316e-40 1.868677e-37 1.659565  0.3644386  2.764064  874
-    ##  7: 1.012569e-35 1.104568e-32 1.556544  0.3892723  2.856587  641
-    ##  8: 1.090100e-32 1.040500e-29 1.488540  0.4088922  2.932679  514
-    ##  9: 2.498820e-31 2.120110e-28 1.453345  0.3932277  2.829633  521
-    ## 10: 1.886484e-30 1.440519e-27 1.431812 -0.3196767 -2.442669  985
-    ## 11: 1.017757e-29 7.065081e-27 1.417276  0.4626715  3.106549  313
-    ## 12: 9.732641e-27 6.193204e-24 1.342234 -0.2756301 -2.171920 1445
-    ## 13: 9.839079e-26 5.366515e-23 1.318889 -0.3303349 -2.475646  769
-    ## 14: 9.369821e-26 5.366515e-23 1.318889 -0.3470908 -2.560975  645
-    ## 15: 6.959498e-25 3.542849e-22 1.295123  0.3767392  2.694702  484
-    ## 16: 8.981978e-25 4.286649e-22 1.287104  0.4208586  2.892121  351
-    ## 17: 2.217991e-24 9.962695e-22 1.279034  0.3767511  2.675259  466
-    ## 18: 3.036265e-24 1.288051e-21 1.279034  0.4767458  3.098403  233
-    ## 19: 1.002308e-23 3.826811e-21 1.262740 -0.3082438 -2.331604  868
-    ## 20: 9.590698e-24 3.826811e-21 1.262740  0.3879737  2.695804  404
-    ## 21: 1.275689e-23 4.638650e-21 1.262740  0.3388596  2.487095  623
-    ## 22: 4.926920e-22 1.710089e-19 1.212545  0.4243921  2.837762  302
-    ## 23: 5.629230e-22 1.868904e-19 1.212545  0.4640391  2.991863  224
-    ## 24: 4.285907e-21 1.363633e-18 1.186651  0.6070772  3.385216  101
-    ## 25: 1.094343e-20 3.342562e-18 1.177893 -0.3416942 -2.456205  534
-    ## 26: 1.239615e-20 3.640654e-18 1.177893 -0.4187963 -2.798760  300
-    ## 27: 2.504760e-20 7.083833e-18 1.169070 -0.3746125 -2.596599  400
-    ## 28: 4.816080e-20 1.313414e-17 1.160180  0.4282213  2.831392  260
-    ## 29: 6.990188e-20 1.840589e-17 1.151221 -0.4325027 -2.778570  242
-    ## 30: 2.380430e-19 6.058988e-17 1.133090 -0.4142816 -2.716118  266
+    ##  1: 1.000000e-50 3.818000e-47       NA  0.3981921  3.039812  956
+    ##  2: 1.000000e-50 3.818000e-47       NA  0.4154785  3.172983  950
+    ##  3: 2.393685e-49 6.092725e-46 1.831581  0.4427646  3.222075  598
+    ##  4: 2.419772e-46 4.619345e-43 1.774150  0.3729019  2.844509  960
+    ##  5: 3.490481e-43 5.330663e-40 1.714797  0.4618209  3.310957  471
+    ##  6: 9.594848e-40 1.221104e-36 1.640742  0.3644386  2.757378  874
+    ##  7: 4.460097e-35 4.865329e-32 1.543183  0.3892723  2.868586  641
+    ##  8: 5.642462e-34 5.385730e-31 1.516108  0.4088922  2.938324  514
+    ##  9: 2.347925e-30 1.992084e-27 1.431812 -0.3196767 -2.451333  985
+    ## 10: 2.990064e-30 2.283213e-27 1.431812  0.3932277  2.834996  521
+    ## 11: 5.645528e-30 3.919023e-27 1.424563  0.4626715  3.150702  313
+    ## 12: 3.100214e-26 1.972770e-23 1.326716 -0.2756301 -2.173047 1445
+    ## 13: 4.578195e-26 2.689161e-23 1.326716 -0.3303349 -2.475033  769
+    ## 14: 1.951069e-25 1.064169e-22 1.311015 -0.3470908 -2.564700  645
+    ## 15: 3.136009e-25 1.596438e-22 1.303093  0.4208586  2.901426  351
+    ## 16: 8.240652e-25 3.932851e-22 1.295123  0.3767392  2.705074  484
+    ## 17: 3.012647e-24 1.353210e-21 1.279034  0.4767458  3.109179  233
+    ## 18: 4.770091e-24 2.023579e-21 1.270913  0.3767511  2.698643  466
+    ## 19: 3.391630e-23 1.363078e-20 1.246233 -0.3082438 -2.339071  868
+    ## 20: 5.608453e-23 2.141307e-20 1.237897  0.3388596  2.489297  623
+    ## 21: 7.668057e-23 2.788252e-20 1.237897  0.3879737  2.731798  404
+    ## 22: 1.275751e-22 4.428014e-20 1.229504  0.4243921  2.859749  302
+    ## 23: 2.301435e-21 7.497223e-19 1.195344 -0.4187963 -2.839146  300
+    ## 24: 2.454565e-21 7.497223e-19 1.195344  0.4640391  3.014744  224
+    ## 25: 2.409047e-21 7.497223e-19 1.195344  0.6070772  3.426428  101
+    ## 26: 7.432789e-21 2.182953e-18 1.177893 -0.3416942 -2.473330  534
+    ## 27: 1.650851e-20 4.668851e-18 1.169070 -0.3746125 -2.618738  400
+    ## 28: 6.221124e-20 1.696589e-17 1.151221  0.4282213  2.826552  260
+    ## 29: 8.668995e-20 2.282636e-17 1.151221  0.4046202  2.739896  306
+    ## 30: 2.435458e-19 6.199052e-17 1.133090 -0.4325027 -2.832096  242
     ##             pval         padj  log2err         ES       NES size
     ##                                     leadingEdge
     ##  1:      MLKL,ADAR,ZNFX1,PLSCR1,RNF213,NUB1,...
@@ -722,28 +764,28 @@ head(gsea_res1[order(gsea_res1$padj),],30)
     ##  6:    ADAR,ZNFX1,PLSCR1,CD274,DDX58,TRAFD1,...
     ##  7:      ADAR,PLSCR1,CD274,NUB1,DDX58,IFIH1,...
     ##  8:    ADAR,ZNFX1,PLSCR1,CD274,DDX58,TRAFD1,...
-    ##  9: ZNFX1,PLSCR1,CD274,DDX58,DHX58,TNFSF13B,...
-    ## 10:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,TOP2A,...
+    ##  9:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,TOP2A,...
+    ## 10: ZNFX1,PLSCR1,CD274,DDX58,DHX58,TNFSF13B,...
     ## 11:   ADAR,SAMHD1,USP18,TNFSF13B,IRF7,STAT2,...
     ## 12:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,WDHD1,...
     ## 13:   PTPN11,MAP3K20,TACC2,CDK1,KIF11,WDHD1,...
     ## 14:   MAP3K20,TACC2,CDK1,KIF11,MAD2L1,HSPA2,...
-    ## 15:     CD274,DDX58,IFIH1,DHX58,PML,EIF2AK2,...
-    ## 16:     ZNFX1,CD274,RNF213,DHX58,IFI44,OPTN,...
-    ## 17:      PLSCR1,USP18,CD47,IFI35,AIM2,KARS1,...
-    ## 18:     CD274,RNF19B,TNFSF13B,IRF7,TAP1,B2M,...
+    ## 15:     ZNFX1,CD274,RNF213,DHX58,IFI44,OPTN,...
+    ## 16:     CD274,DDX58,IFIH1,DHX58,PML,EIF2AK2,...
+    ## 17:     CD274,RNF19B,TNFSF13B,IRF7,TAP1,B2M,...
+    ## 18:      PLSCR1,USP18,CD47,IFI35,AIM2,KARS1,...
     ## 19:     CDK1,TOP2A,RPA1,MAD2L1,HSPA2,NAP1L3,...
     ## 20:    ADAR,ZNFX1,PLSCR1,DDX58,TRAFD1,DHX58,...
     ## 21:    ADAR,ZNFX1,PLSCR1,DDX58,TRAFD1,DHX58,...
     ## 22:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
-    ## 23:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
-    ## 24:          NUB1,CD47,SHFL,GCH1,PTPN2,GBP1,...
-    ## 25:     CDK1,KIF11,TOP2A,MAD2L1,SPC24,CDCA3,...
-    ## 26:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
+    ## 23:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
+    ## 24:      MLKL,ADAR,ZNFX1,PLSCR1,DDX58,IFIH1,...
+    ## 25:          NUB1,CD47,SHFL,GCH1,PTPN2,GBP1,...
+    ## 26:     CDK1,KIF11,TOP2A,MAD2L1,SPC24,CDCA3,...
     ## 27:   KIF11,TOP2A,MAD2L1,HSPA2,CENPK,TRIP13,...
     ## 28:     PLSCR1,DDX58,IFIH1,DHX58,CD47,IFI35,...
-    ## 29:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
-    ## 30: KIF11,MAD2L1,CENPK,TRIP13,PPP2R2D,BUB1B,...
+    ## 29:  ZNFX1,PLSCR1,CD274,TNFSF13B,CD47,IFI35,...
+    ## 30:   TOP2A,MAD2L1,SPC24,CENPK,TRIP13,BUB1B,...
     ##                                     leadingEdge
 
 ``` r
@@ -754,98 +796,98 @@ head(gsea_res2[order(gsea_res2$padj),],30)
     ##  1:                                                GOBP_TRIGLYCERIDE_RICH_LIPOPROTEIN_PARTICLE_CLEARANCE
     ##  2:                                                             GOBP_NOREPINEPHRINE_BIOSYNTHETIC_PROCESS
     ##  3:                                                        GOBP_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
-    ##  4:                                                GOBP_SPINAL_CORD_OLIGODENDROCYTE_CELL_DIFFERENTIATION
-    ##  5:                                               GOBP_POSITIVE_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
-    ##  6:                                                                          GOBP_MOTOR_NEURON_MIGRATION
+    ##  4:                                               GOBP_POSITIVE_REGULATION_OF_CARDIOCYTE_DIFFERENTIATION
+    ##  5:                                                                     GOBP_DENDRITIC_SPINE_DEVELOPMENT
+    ##  6:                                                                        GOBP_LUNG_SACCULE_DEVELOPMENT
     ##  7:                                                          GOBP_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
-    ##  8:                                                                          GOBP_PRONEPHROS_DEVELOPMENT
-    ##  9:                                                                     GOBP_DENDRITIC_SPINE_DEVELOPMENT
-    ## 10:                                                                        GOBP_LUNG_SACCULE_DEVELOPMENT
-    ## 11:                                                                     GOBP_MYCOTOXIN_METABOLIC_PROCESS
-    ## 12:                                                                        GOBP_MAMMARY_GLAND_INVOLUTION
-    ## 13:                     GOBP_HETEROPHILIC_CELL_CELL_ADHESION_VIA_PLASMA_MEMBRANE_CELL_ADHESION_MOLECULES
-    ## 14:                                  GOBP_NEGATIVE_REGULATION_OF_CHEMOKINE_C_C_MOTIF_LIGAND_5_PRODUCTION
-    ## 15:                                     GOBP_NEGATIVE_REGULATION_OF_SMOOTH_MUSCLE_CELL_APOPTOTIC_PROCESS
-    ## 16: GOBP_POSITIVE_REGULATION_OF_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS_DEADENYLATION_DEPENDENT_DECAY
-    ## 17:                                                       GOBP_REGULATION_OF_DENDRITIC_SPINE_DEVELOPMENT
-    ## 18:                                                         GOBP_REGULATION_OF_METALLOPEPTIDASE_ACTIVITY
-    ## 19:                                                                           GOBP_RESPONSE_TO_BACTERIUM
-    ## 20:                                                             GOBP_STABILIZATION_OF_MEMBRANE_POTENTIAL
-    ## 21:                                                                  GOBP_ADHERENS_JUNCTION_ORGANIZATION
-    ## 22:                                                         GOBP_CELLULAR_RESPONSE_TO_FLUID_SHEAR_STRESS
-    ## 23:                                                                   GOBP_DENDRITIC_SPINE_MORPHOGENESIS
-    ## 24:                                                                    GOBP_ISOCITRATE_METABOLIC_PROCESS
-    ## 25:                                                 GOBP_LEARNED_VOCALIZATION_BEHAVIOR_OR_VOCAL_LEARNING
-    ## 26:                                        GOBP_NEGATIVE_REGULATION_OF_EXTRACELLULAR_MATRIX_ORGANIZATION
-    ## 27:                                      GOBP_POSITIVE_REGULATION_OF_CARDIAC_MUSCLE_CELL_DIFFERENTIATION
-    ## 28:                                   GOBP_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
-    ## 29:                                                          GOBP_REGULATION_OF_APOPTOTIC_CELL_CLEARANCE
-    ## 30:                                                     GOBP_REGULATION_OF_DENDRITIC_SPINE_MORPHOGENESIS
+    ##  8:                                                                          GOBP_MOTOR_NEURON_MIGRATION
+    ##  9:                                        GOBP_NEGATIVE_REGULATION_OF_EXTRACELLULAR_MATRIX_ORGANIZATION
+    ## 10:                                                                          GOBP_PRONEPHROS_DEVELOPMENT
+    ## 11:                                                     GOBP_APOPTOTIC_PROCESS_INVOLVED_IN_MORPHOGENESIS
+    ## 12:                                                         GOBP_CELLULAR_RESPONSE_TO_FLUID_SHEAR_STRESS
+    ## 13:                                                                    GOBP_ISOCITRATE_METABOLIC_PROCESS
+    ## 14:                                                                        GOBP_MAMMARY_GLAND_INVOLUTION
+    ## 15:                                                                     GOBP_MYCOTOXIN_METABOLIC_PROCESS
+    ## 16:                                  GOBP_NEGATIVE_REGULATION_OF_CHEMOKINE_C_C_MOTIF_LIGAND_5_PRODUCTION
+    ## 17:                                     GOBP_NEGATIVE_REGULATION_OF_SMOOTH_MUSCLE_CELL_APOPTOTIC_PROCESS
+    ## 18:                                      GOBP_POSITIVE_REGULATION_OF_CARDIAC_MUSCLE_CELL_DIFFERENTIATION
+    ## 19: GOBP_POSITIVE_REGULATION_OF_NUCLEAR_TRANSCRIBED_MRNA_CATABOLIC_PROCESS_DEADENYLATION_DEPENDENT_DECAY
+    ## 20:                                   GOBP_POSITIVE_REGULATION_OF_PROTEIN_LOCALIZATION_TO_EARLY_ENDOSOME
+    ## 21:                                                          GOBP_REGULATION_OF_APOPTOTIC_CELL_CLEARANCE
+    ## 22:                                                       GOBP_REGULATION_OF_DENDRITIC_SPINE_DEVELOPMENT
+    ## 23:                                                         GOBP_REGULATION_OF_METALLOPEPTIDASE_ACTIVITY
+    ## 24:                                                                           GOBP_RESPONSE_TO_BACTERIUM
+    ## 25:                                                GOBP_SPINAL_CORD_OLIGODENDROCYTE_CELL_DIFFERENTIATION
+    ## 26:                                                             GOBP_STABILIZATION_OF_MEMBRANE_POTENTIAL
+    ## 27:                                                                   GOBP_DENDRITIC_SPINE_MORPHOGENESIS
+    ## 28:                     GOBP_HETEROPHILIC_CELL_CELL_ADHESION_VIA_PLASMA_MEMBRANE_CELL_ADHESION_MOLECULES
+    ## 29:                                                        GOBP_ACTOMYOSIN_CONTRACTILE_RING_ORGANIZATION
+    ## 30:                                                                  GOBP_ADHERENS_JUNCTION_ORGANIZATION
     ##                                                                                                  pathway
     ##             pval         padj   log2err         ES       NES size
-    ##  1: 4.707193e-31 3.586881e-27 1.4462029 -0.9988198 -1.329274    1
-    ##  2: 2.604307e-05 9.922411e-02 0.5756103 -0.9895257 -1.316905    1
-    ##  3: 4.293645e-05 1.090586e-01 0.5573322  0.8488693  1.452888   22
-    ##  4: 7.032368e-05 1.339666e-01 0.5384341  0.9993254  1.382083    2
-    ##  5: 1.173516e-04 1.788439e-01 0.5384341  0.9318825  1.524817   12
-    ##  6: 2.114554e-04 2.685483e-01 0.5188481 -0.9594983 -1.609633    3
-    ##  7: 2.868151e-04 3.122187e-01 0.4984931  0.9442067  1.502596    9
-    ##  8: 3.559127e-04 3.390068e-01 0.4984931  0.9891603  1.479103    5
-    ##  9: 4.716860e-04 3.474214e-01 0.4984931  0.6817059  1.236595   73
-    ## 10: 5.015269e-04 3.474214e-01 0.4772708  0.9709215  1.502124    7
-    ## 11: 4.836053e-04 3.474214e-01 0.4984931  0.9986660  1.381171    2
-    ## 12: 5.596229e-04 3.553605e-01 0.4772708  0.9851311  1.473079    5
-    ## 13: 9.664383e-04 3.682130e-01 0.4772708  0.7668054  1.315970   23
-    ## 14: 9.168014e-04 3.682130e-01 0.4772708  0.9888266  1.443270    4
-    ## 15: 7.348052e-04 3.682130e-01 0.4772708  0.9828138  1.469613    5
-    ## 16: 9.232309e-04 3.682130e-01 0.4772708  0.8604077  1.417548   13
-    ## 17: 9.480305e-04 3.682130e-01 0.4772708  0.7100760  1.264697   44
-    ## 18: 8.146279e-04 3.682130e-01 0.4772708  0.8965655  1.453306   11
-    ## 19: 9.480305e-04 3.682130e-01 0.4772708  0.5829206  1.095232  351
-    ## 20: 6.958758e-04 3.682130e-01 0.4772708  0.9833421  1.470404    5
-    ## 21: 1.684347e-03 4.510385e-01 0.4550599  0.7194758  1.264739   35
-    ## 22: 1.796590e-03 4.510385e-01 0.4550599  0.8042981  1.363294   19
-    ## 23: 1.371412e-03 4.510385e-01 0.4550599  0.7002684  1.249632   46
-    ## 24: 1.462278e-03 4.510385e-01 0.4550599  0.9654274  1.468008    6
-    ## 25: 1.834933e-03 4.510385e-01 0.4550599 -0.8077916 -1.516322    5
-    ## 26: 1.564871e-03 4.510385e-01 0.4550599  0.9054169  1.452831   10
-    ## 27: 1.725159e-03 4.510385e-01 0.4550599  0.9294366  1.459563    8
-    ## 28: 1.761640e-03 4.510385e-01 0.4550599  0.9442120  1.460801    7
-    ## 29: 1.296206e-03 4.510385e-01 0.4550599  0.9382909  1.473468    8
-    ## 30: 1.665939e-03 4.510385e-01 0.4550599  0.7197737  1.265263   35
+    ##  1: 4.300031e-34 3.276624e-30 1.5161076 -0.9988198 -1.340920    1
+    ##  2: 1.648047e-05 6.279059e-02 0.5756103 -0.9895257 -1.328443    1
+    ##  3: 4.293645e-05 1.090586e-01 0.5573322  0.8488693  1.453213   22
+    ##  4: 6.619050e-05 1.260929e-01 0.5384341  0.9318825  1.519853   12
+    ##  5: 2.483546e-04 3.772950e-01 0.4984931  0.6817059  1.236679   73
+    ##  6: 2.970827e-04 3.772950e-01 0.4984931  0.9709215  1.512125    7
+    ##  7: 3.701610e-04 4.029467e-01 0.4984931  0.9442067  1.503365    9
+    ##  8: 5.319604e-04 4.076465e-01 0.4772708 -0.9594983 -1.601670    3
+    ##  9: 4.653165e-04 4.076465e-01 0.4984931  0.9054169  1.456460   10
+    ## 10: 5.349692e-04 4.076465e-01 0.4772708  0.9891603  1.485217    5
+    ## 11: 1.463451e-03 4.468359e-01 0.4550599  0.7997623  1.357927   19
+    ## 12: 1.150517e-03 4.468359e-01 0.4550599  0.8042981  1.365628   19
+    ## 13: 1.277761e-03 4.468359e-01 0.4550599  0.9654274  1.477527    6
+    ## 14: 8.294408e-04 4.468359e-01 0.4772708  0.9851311  1.479168    5
+    ## 15: 1.085011e-03 4.468359e-01 0.4550599  0.9986660  1.381321    2
+    ## 16: 1.506515e-03 4.468359e-01 0.4550599  0.9888266  1.449496    4
+    ## 17: 9.963088e-04 4.468359e-01 0.4550599  0.9828138  1.475688    5
+    ## 18: 1.524637e-03 4.468359e-01 0.4550599  0.9294366  1.462232    8
+    ## 19: 1.317504e-03 4.468359e-01 0.4550599  0.8604077  1.415867   13
+    ## 20: 1.464679e-03 4.468359e-01 0.4550599  0.9442120  1.470528    7
+    ## 21: 9.447232e-04 4.468359e-01 0.4772708  0.9382909  1.476162    8
+    ## 22: 1.187332e-03 4.468359e-01 0.4550599  0.7100760  1.258871   44
+    ## 23: 9.887974e-04 4.468359e-01 0.4550599  0.8965655  1.451854   11
+    ## 24: 1.224148e-03 4.468359e-01 0.4550599  0.5829206  1.096163  351
+    ## 25: 6.484452e-04 4.468359e-01 0.4772708  0.9993254  1.382233    2
+    ## 26: 9.472299e-04 4.468359e-01 0.4772708  0.9833421  1.476482    5
+    ## 27: 1.702755e-03 4.784214e-01 0.4550599  0.7002684  1.244438   46
+    ## 28: 1.757979e-03 4.784214e-01 0.4550599  0.7668054  1.317433   23
+    ## 29: 1.899353e-03 4.990713e-01 0.4550599  0.9400900  1.464108    7
+    ## 30: 2.349394e-03 5.291416e-01 0.4317077  0.7194758  1.262491   35
     ##             pval         padj   log2err         ES       NES size
-    ##                                       leadingEdge
-    ##  1:                                          APOE
-    ##  2:                                         MOXD1
-    ##  3:                         SOX6,ARRB2,DHX36,HEY2
-    ##  4:                                    SOX6,SOX13
-    ##  5:                                   ARRB2,DHX36
-    ##  6:                               RELN,VEGFA,NRP1
-    ##  7:                                   DTX3L,MGAT3
-    ##  8:                                CEP290,SEC61A1
-    ##  9:        LZTS3,DIP2A,DISC1,EFNA1,DHX36,DLG5,...
-    ## 10:                                   CREB1,GATA6
-    ## 11:                                 NFE2L2,AKR7A3
-    ## 12:                                     CAPN1,BAX
-    ## 13:                       CD164,FAT4,ICAM1,AMIGO2
-    ## 14:                                    OAS3,SIRPA
-    ## 15:                                    ARRB2,LRP6
-    ## 16:                 TNRC6C,DHX36,AGO2,CPEB3,ZFP36
-    ## 17:         DISC1,EFNA1,DHX36,DLG5,CPEB3,SDK1,...
-    ## 18:                           STAT3,PICALM,DDRGK1
-    ## 19:           CXCL8,OAS2,OAS3,ASS1,IDO1,SIRPA,...
-    ## 20:                                 KCNN4,CHCHD10
-    ## 21:           CDH24,PTPN23,VCL,TJP1,JAM3,DLG5,...
-    ## 22:                    NFE2L2,ASS1,SRC,PTGS2,KLF2
-    ## 23:    LZTS3,DIP2A,EFNA1,DHX36,SIPA1L1,PDLIM5,...
-    ## 24:                                    ACO2,IDH3G
-    ## 25:                  SHANK3,NRXN2,STRA6,HTT,NRXN1
-    ## 26:                 ADTRP,TNFRSF1B,EMILIN1,NOTCH1
-    ## 27:                                   ARRB2,KAT2A
-    ## 28:                                   DTX3L,MGAT3
-    ## 29:                                 C3,C4A,C4B,C2
-    ## 30: LZTS3,EFNA1,DHX36,SIPA1L1,PDLIM5,ARHGAP44,...
-    ##                                       leadingEdge
+    ##                                    leadingEdge
+    ##  1:                                       APOE
+    ##  2:                                      MOXD1
+    ##  3:                      SOX6,ARRB2,DHX36,HEY2
+    ##  4:                                ARRB2,DHX36
+    ##  5:     LZTS3,DIP2A,DISC1,EFNA1,DHX36,DLG5,...
+    ##  6:                                CREB1,GATA6
+    ##  7:                                DTX3L,MGAT3
+    ##  8:                            RELN,VEGFA,NRP1
+    ##  9:              ADTRP,TNFRSF1B,EMILIN1,NOTCH1
+    ## 10:                             CEP290,SEC61A1
+    ## 11:                 TNFRSF1B,NOTCH1,CRYAB,FZD5
+    ## 12:                 NFE2L2,ASS1,SRC,PTGS2,KLF2
+    ## 13:                                 ACO2,IDH3G
+    ## 14:                                  CAPN1,BAX
+    ## 15:                              NFE2L2,AKR7A3
+    ## 16:                                 OAS3,SIRPA
+    ## 17:                                 ARRB2,LRP6
+    ## 18:                                ARRB2,KAT2A
+    ## 19:              TNRC6C,DHX36,AGO2,CPEB3,ZFP36
+    ## 20:                                DTX3L,MGAT3
+    ## 21:                              C3,C4A,C4B,C2
+    ## 22:      DISC1,EFNA1,DHX36,DLG5,CPEB3,SDK1,...
+    ## 23:                        STAT3,PICALM,DDRGK1
+    ## 24:        CXCL8,OAS2,OAS3,ASS1,IDO1,SIRPA,...
+    ## 25:                                 SOX6,SOX13
+    ## 26:                              KCNN4,CHCHD10
+    ## 27: LZTS3,DIP2A,EFNA1,DHX36,SIPA1L1,PDLIM5,...
+    ## 28:                    CD164,FAT4,ICAM1,AMIGO2
+    ## 29:                                 VPS4A,RTKN
+    ## 30:        CDH24,PTPN23,VCL,TJP1,JAM3,DLG5,...
+    ##                                    leadingEdge
 
 ## Stim only
 
@@ -854,7 +896,7 @@ Stim=subset(meta,condition=='AntiInflammatory'|condition=='ProInflammatory')
 autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,col='condition')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-22-1.png)<!-- -->
 
 ``` r
 #Stim$cd3e = BDCorrB['ENSG00000198851', rownames(Stim)]
@@ -886,7 +928,7 @@ a9=autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=Stim,fill='CTNND1',shape=21
 cowplot::plot_grid(a1,a2,a3,a4,a5,a6,a7,a8,a9,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-23-1.png)<!-- -->
 
 ## Clustering only Stim
 
@@ -902,19 +944,19 @@ t=data.frame(table(meta$clus_hm))
 plot(hc)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ggplot(t,aes(Var1,Freq))+geom_col(fill=c('darkolivegreen3','brown3'))+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-2.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-24-2.png)<!-- -->
 
 ``` r
 autoplot(prcomp(t(BDCorrB[,rownames(Stim)])),data=subtypeStim,col='subtypeStim')+theme_bw()
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-19-3.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-24-3.png)<!-- -->
 
 ``` r
 summarize_col<-function(col){
@@ -940,7 +982,7 @@ p5=summarize_col('condition1')
 cowplot::plot_grid(p1,p2,p3,p4,p5,ncol=3)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-25-1.png)<!-- -->
 
 ``` r
 #subset(lesions,lesion_type=='C2'&tissue=='PV')
@@ -976,4 +1018,4 @@ res$comp="C1_vs_C2"
 ggplot(res,aes(logFC,-log10(P.Value),col=sign))+geom_point_interactive(aes(x=logFC,y=-log10(P.Value),color=sign,tooltip = gene_name,data_id = gene_name))+theme_bw()+scale_color_manual(values=sign_cols)+ geom_label_repel(data=subset(res,show==T),aes(label=gene_name),col='black',size=3,force=30,fill = alpha(c("white"),0.5))+facet_grid(~comp)
 ```
 
-![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-21-1.png)<!-- -->
+![](BulkEndoProject_notebook_files/figure-gfm/unnamed-chunk-26-1.png)<!-- -->
